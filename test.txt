@@ -1,4 +1,0 @@
-hello
-Line2
-Line3
-test1

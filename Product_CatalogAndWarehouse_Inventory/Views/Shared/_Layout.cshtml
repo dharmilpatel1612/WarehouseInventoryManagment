@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title | Product Catalog and Warehouse Inventory</title>
+
+    <!--Used to render a bundle of CSS files-->
+    @Styles.Render("~/Content/css")
+
+</head>
+
+<body>
+    @*@if (@ViewBag.Title != "Login")
+    {*@
+        <div id="wrapper">
+            <!--nav bar starts-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+
+                <div class="sidebar-collapse">
+                    <ul class="nav metismenu" id="side-menu">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                <span>
+                                    <img alt="image" class="img-circle" src="~/Admin_Template/img/profile_small.jpg" />
+                                </span>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="clear">
+                                        <span class="block m-t-xs">
+                                            <strong class="font-bold">Patel</strong>
+                                        </span> @*<span class="text-muted text-xs block">Art Director <b class="caret"></b></span>*@
+                                    </span>
+                                </a>
+                                @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="contacts.html">Contacts</a></li>
+                    <li><a href="mailbox.html">Mailbox</a></li>
+                    <li class="divider"></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>*@
+                            </div>
+                            <div class="logo-element">
+                                IN+
+                            </div>
+                        </li>
+                        <!--Dashboard section starts-->
+                        @*<li class="active">
+            <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li class="active"><a href="index.html">Dashboard v.1</a></li>
+                <li><a href="dashboard_2.html">Dashboard v.2</a></li>
+                    <li><a href="dashboard_3.html">Dashboard v.3</a></li>
+                    <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
+                    <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+            </ul>
+        </li>*@
+                        <!--Dashboard section ends-->
+                        <!--Layouts section starts-->
+                        <li>
+                            <a href="~/UserManagement/UserList"><i @*class="fa fa-diamond"*@></i> <span class="nav-label">User List</span></a>
+                        </li>
+                        <li>
+                            <a href="~/UserManagement/Login"><i></i> <span class="nav-label">Log out</span></a>
+                        </li>
+                        <!--Layouts section ends-->
+                        <!--Mailbox section starts-->
+                        @*<li>
+            <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span><span class="label label-warning pull-right">16/24</span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="mailbox.html">Inbox</a></li>
+                <li><a href="mail_detail.html">Email view</a></li>
+                <li><a href="mail_compose.html">Compose email</a></li>
+                <li><a href="email_template.html">Email templates</a></li>
+            </ul>
+        </li>*@
+                        <!--Mailbox section ends-->
+                        @*<li>
+            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Forms</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="form_basic.html">Basic form</a></li>
+                <li><a href="form_advanced.html">Advanced Plugins</a></li>
+                <li><a href="form_wizard.html">Wizard</a></li>
+                <li><a href="form_file_upload.html">File Upload</a></li>
+                <li><a href="form_editors.html">Text Editor</a></li>
+                <li><a href="form_autocomplete.html">Autocomplete</a></li>
+                <li><a href="form_markdown.html">Markdown</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="grid_options.html"><i class="fa fa-laptop"></i> <span class="nav-label">Grid options</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Tables</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="table_basic.html">Static Tables</a></li>
+                <li><a href="table_data_tables.html">Data Tables</a></li>
+                <li><a href="table_foo_table.html">Foo Tables</a></li>
+                <li><a href="jq_grid.html">jqGrid</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Menu Levels </span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li>
+                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                    <ul class="nav nav-third-level">
+                        <li>
+                            <a href="#">Third Level Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Third Level Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Third Level Item</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><a href="#">Second Level Item</a></li>
+                <li>
+                    <a href="#">Second Level Item</a>
+                </li>
+                <li>
+                    <a href="#">Second Level Item</a>
+                </li>
+            </ul>
+        </li>*@
+
+                        <!--Package section starts-->
+                        @*<li class="special_link">
+            <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
+        </li>*@
+                        <!--Package section ends-->
+                    </ul>
+
+                </div>
+            </nav>
+            <!--nav bar ends-->
+
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+
+                <div class="row border-bottom">
+                    <!--Top navbar starts-->
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                            <form role="search" class="navbar-form-custom" action="search_results.html">
+                                @*<div class="form-group">
+                                        <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                                    </div>*@
+                            </form>
+                        </div>
+                        <!--<ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <span class="m-r-sm text-muted welcome-message">Product catalog and warehouse inventory</span>
+                            </li>
+
+                            <li>
+                                <a href="login.html">-->
+                        @*<i class="fa fa-sign-out"></i>*@
+                        <!--Log out
+                                </a>
+                            </li>
+                        </ul>-->
+
+                    </nav>
+                    <!--Top navbar ends-->
+                </div>
+
+                <!--Header section starts-->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <h1>@ViewBag.Title</h1>
+                </div>
+                <!--Header section ends-->
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+
+                        <!--Used to render child page/view-->
+                        @RenderBody()
+
+                    </div>
+                </div>
+
+                <!--footer section starts-->
+                <div class="footer">
+                    @*<div class="pull-right">
+                            10GB of <strong>250GB</strong> Free.
+                        </div>*@
+                    <div>
+                        <strong>@*Copyright*@</strong> Product Catalog and Warehouse Inventory &copy; 2023-2024
+                    </div>
+                </div>
+                <!--footer section ends-->
+
+            </div>
+        </div>
+    @*}
+    else
+    {
+        <div class="row">
+            Used to render child page/view
+            @RenderBody()
+        </div>
+    }-->*@
+
+    <!--Used to render a bundle of Mainly scripts Custom and plugin javascript files-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

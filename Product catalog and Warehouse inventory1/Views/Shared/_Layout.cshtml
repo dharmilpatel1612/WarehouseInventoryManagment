@@ -1,0 +1,117 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.title | Product Catalog and Warehouse Inventory</title>
+    
+
+    <!--Used to render a bundle of CSS files-->
+    @Styles.Render("~/Content/css")
+    @*<link href="~/Admin_Templete/css/plugins/dataTables/datatables.min.css" rel="stylesheet" />*@
+</head>
+<body>
+    @if (ViewBag.title != "Login")
+    {
+        <div id="wrapper">
+            <!--nav bar starts-->
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav metismenu" id="side-menu">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                <span>
+                                    <img alt="image" class="img-circle" src="~/Admin_Templete/img/profile_small.jpg" />
+                                </span>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="clear">
+                                        <span class="block m-t-xs">
+                                            <strong class="font-bold">@Session["Username"]</strong>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="logo-element">
+                                IN+
+                            </div>
+                        </li>
+                        <li>
+                            @*<a href="https://localhost:44333/Usermangement"><span class="nav-label">Registration Form</span></a>*@
+                            <a href="https://localhost:44333/Usermangement/Userlist"><span class="nav-label"></span>UserList</a>
+                            @*<a href="https://localhost:44333/Usermangement/LoginPage"><span class="nav-label"></span>LoginPage</a>*@
+                        </li>
+                        <li>
+                            <a href="https://localhost:44333/Usermangement/Logout"><span class="nav-label"></span>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!--nav bar ends-->
+
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <div class="row border-bottom">
+                    <!--Top navbar starts-->
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i></a>
+                            <form role="search" class="navbar-form-custom" action="search_results.html">
+                            </form>
+                        </div>
+                    </nav>
+                    <!--Top navbar ends-->
+                </div>
+                <!--Header section starts-->
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <h1>@ViewBag.title</h1>
+                </div>
+                <!--Header section ends-->
+
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+
+                        <!--Used to render child page/view-->
+                        @RenderBody()
+
+                    </div>
+                </div>
+
+                <!--footer section starts-->
+                <div class="footer">
+                    <div>
+                        <strong></strong> Product Catalog and Warehouse Inventory &copy; 2023-2024
+                    </div>
+                </div>
+                <!--footer section ends-->
+
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <div class="row">
+
+            <!--Used to render child page/view-->
+            @RenderBody()
+
+        </div>
+    }
+
+    <!--Used to render a bundle of Mainly scripts Custom and plugin javascript files-->
+    @*<script src="~/Admin_Templete/js/jquery-2.1.1.js"></script>*@
+    @*@Scripts.Render("~/bundles/jquery")*@
+    
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+        });
+    </script>
+</body>
+</html>
+

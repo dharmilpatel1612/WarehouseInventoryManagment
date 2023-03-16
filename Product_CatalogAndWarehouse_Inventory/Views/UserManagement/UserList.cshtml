@@ -1,0 +1,124 @@
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.UserModel
+
+@{
+    ViewBag.Title = "Userlist";
+}
+
+
+@if (TempData["message"] != null)
+{
+    <span style="color:green;"> @TempData["message"]</span>
+}
+
+
+<div class="ibox-content">
+    <div class="table-responsive">
+        <!--Table Section starts-->
+        <table class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+                <tr>
+                    <th style="width:70px">Serial No.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Gender</th>
+                    <th>City Name</th>
+                    <th style="width:100px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--UserList call from model-->
+                @foreach (var item in Model.userList)
+                {
+                    <tr>
+                        <td>
+                            @item.SerialNo
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.MobileNumber
+                        </td>
+                        <td>
+                            @item.Gender
+                        </td>
+                        <td>
+                            @item.City
+                        </td>
+                        <td style="100px">
+                            <!--Button click event for Edit data-->
+                            <button class="btn btn-success btn-xs" style="margin-top:1px; margin-bottom:1px; width:58px"
+                                    onclick="location.href='@Url.Action("EditUserData", "UserManagement", new { registration_id = item.registration_id })'">
+                                Edit
+                            </button>
+
+                            <!--Button click event for Delete data-->
+                            <a href='@Url.Action("DeleteUserData", "UserManagement", new { registraion_id = item.registration_id })'
+                               class="btn btn-danger btn-xs" style="margin-bottom:1px; margin-bottom:1px; width:58px" ,
+                               onclick="return confirm('Are you sure you want to delete this record?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!--Table section ends-->
+    </div>
+</div>
+
+
+<!--Scripts for Pagination and Searching-->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.dataTables-example').DataTable({
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+
+                    {
+
+                        extend: 'csv', title: 'UserList',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+﻿@*@model Product_CatalogAndWarehouse_Inventory.Models.UserModel
+
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+            <form method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10"><input type="text" class="form-control">          
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" }) </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Mobile_Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Mobile_Number">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        Gender <br />
+                    </label>
+                    <div class="col-sm-10">
+                        <div>
+                            <label>
+                                <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">Male
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">City</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" name="city">
+                            <option>--Select--</option>
+                            <option>Chikhli</option>
+                            <option>Billimora</option>
+                            <option>Navsari</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Password</label>
+
+                    <div class="col-lg-10"><input type="password" class="form-control"></div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Confirm Password</label>
+
+                    <div class="col-lg-10"><input type="password" class="form-control"></div>
+                </div>
+
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>*@
+

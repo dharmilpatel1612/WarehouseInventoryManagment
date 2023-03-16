@@ -1,0 +1,156 @@
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.UserModel
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title | Product Catalog and Warehouse Inventory</title>
+
+    <!--Used to render a bundle of CSS files-->
+    @Styles.Render("~/Content/css")
+
+</head>
+
+<body class="gray-bg">
+    <div id="wrapper">
+
+        <!--Header section starts-->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12" style="text-align:center">
+                <h2>@ViewBag.Title</h2>
+            </div>
+        </div>
+        <!--Header section ends-->
+
+        @if (ViewBag.Message != null)
+        {
+            <span style="color:@Convert.ToString(ViewBag.color)">@ViewBag.Message</span>
+        }
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="container">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <form method="post" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Name</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Email</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Mobile_Number</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+                                            <span asp-validation-for="MobileNumber"></span>
+                                            @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            Gender <br />
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <div>
+                                                @Html.RadioButton("Gender", "Male")
+                                                <label for="Male">Male</label>
+                                            </div>
+                                            <div>
+                                                @Html.RadioButton("Gender", "Female")
+                                                <label for="Female">Female</label>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Gender, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" name="city_Id">City</label>
+                                        <div class="col-sm-10">
+                                            @Html.DropDownListFor(m => m.city_Id, new SelectList(Model.Cities, "Value", "Text"), "Select", new { @class = "form-control m-b" })
+                                            @Html.ValidationMessageFor(m => m.city_Id, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Password</label>
+                                        <div class="col-lg-10">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Confirm Password</label>
+                                        <div class="col-lg-10">
+                                            @Html.PasswordFor(m => m.Confirm_Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Confirm_Password, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-w-m btn-primary" type="submit">@TempData["Message"]</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <lable class="col-lg-2 control-label">Have an account?</lable>
+                                        <div class="col-sm-4">
+
+                                            <a class="btn btn-w-m btn-success" href="~/UserManagement/Login"><i></i>Log in</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--footer section starts-->
+            <div class="footer">
+                <div>
+                    <strong></strong> Product Catalog and Warehouse Inventory &copy; 2023-2024
+                </div>
+            </div>
+            <!--footer section ends-->
+        </div>
+    </div>
+
+    <!--Used to render a bundle of Mainly scripts Custom and plugin javascript files-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+</body>
+
+</html>
+
+
+
+
+
+

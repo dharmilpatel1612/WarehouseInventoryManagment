@@ -1,7 +1,36 @@
-﻿
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.SKUMapping
+
 @{
     ViewBag.Title = "SKUMapping";
 }
+
+@{
+    if (ViewBag.Message != null)
+    {
+    <span style="color:@Convert.ToString(ViewBag.color)">@ViewBag.Message</span> 
+    }
+}
+
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="col-lg-4">
+                    <label class="form-lable" for="customFile">Select Excel file</label>
+                    @*<input type="file" class="form-control" id="customFile" />*@
+                    @Html.TextBoxFor(m => m.fileupload, new { type = "file", @class = "form-control", id = "customFile" })
+                    @Html.ValidationMessageFor(m => m.fileupload, "", new { @style = "color:red" })
+                </div>
+                <div class="col-lg-4" style="margin-top:22px">
+                    @*<input class="btn btn-w-m btn-primary" type="submit" value="Upload"/>*@
+                    <button class="btn btn-w-m btn-primary" type="submit">Upload</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
 
 

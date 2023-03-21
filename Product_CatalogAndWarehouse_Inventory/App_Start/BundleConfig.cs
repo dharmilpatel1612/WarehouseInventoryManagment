@@ -29,7 +29,9 @@ namespace Product_CatalogAndWarehouse_Inventory
                     "~/Admin_Template/css/bootstrap.min.css",
                     "~/Admin_Template/font-awesome/css/font-awesome.css",
                     "~/Admin_Template/css/plugins/dataTables/datatables.min.css",
-                    "~/Admin_Template/css/animate.css",
+                    "~/Admin_Template/css/animate.css",                   
+                    "~/Admin_Template/css/plugins/jasny/jasny-bootstrap.min.css",
+                    //"~/Admin_Template/css/plugins/codemirror/codemirror.css",
                     "~/Admin_Template/css/style.css"));
 
             // Mainly scripts Custom and plugin javascript
@@ -42,12 +44,15 @@ namespace Product_CatalogAndWarehouse_Inventory
                     "~/Admin_Template/js/plugins/slimscroll/jquery.slimscroll.min.js",
                     "~/Admin_Template/js/plugins/dataTables/datatables.min.js",
                     "~/Admin_Template/js/inspinia.js",
-                    "~/Admin_Template/js/plugins/pace/pace.min.js"));
+                    "~/Admin_Template/js/plugins/pace/pace.min.js",
+                    "~/Admin_Template/js/plugins/jasny/jasny-bootstrap.min.js"                        
+                    //"~/Admin_Template/js/plugins/codemirror/codemirror.js",
+                    //"~/Admin_Template/js/plugins/codemirror/mode/xml/xml.js"
+                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
             "~/Admin_Template/js/plugins/validate/jquery.validate.min.js",
-            "~/Scripts/jquery.validate.unobtrusive.js"
-            /*"~/Admin_Template/js/plugins/validate/jquery.validate.unobtrusive.js"*/));
+            "~/Scripts/jquery.validate.unobtrusive.js"));
         }
     }
 }

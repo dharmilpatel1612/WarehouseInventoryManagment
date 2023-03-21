@@ -10,7 +10,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
 {
     public class UserModel
     {
-        public int SerialNo { get; set; }
+        public int SerialNo { get; set; }        
         public int registration_id { get; set; }
         // Validation for Name (1.required 2.Length - max(50), min(3) 3. Only characters)
         [Required]
@@ -51,7 +51,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         [DataType(DataType.Password)]
         [Compare("Password")]
         // Return the Confirm_Password
-        public string Confirm_Password { get; set; }
+        public string Confirm_Password { get; set; }       
         public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
         public List<UserModel> userList { get; set; }
         public List<UserModel> EditList { get; set; }

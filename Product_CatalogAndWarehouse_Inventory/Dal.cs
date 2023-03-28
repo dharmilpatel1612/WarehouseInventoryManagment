@@ -74,5 +74,46 @@ namespace Product_CatalogAndWarehouse_Inventory
             cn.Close();
             return dt;
         }
+
+        public void BulkInsertWarehouse(DataTable dt_temp, string TableName)
+        {
+            SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(cn);
+
+            // Set the timeout.
+            sqlBulkCopy.BulkCopyTimeout = 700;
+
+            //Set the database table name
+            sqlBulkCopy.DestinationTableName = TableName;
+            sqlBulkCopy.ColumnMappings.Add("Warehouse_SKU", "WarehouseSKU");
+           
+            if (cn.State == ConnectionState.Closed)
+            {
+                cn.Open();
+            }
+            sqlBulkCopy.WriteToServer(dt_temp);
+            cn.Close();
+        }
+        public void BulkInsertMapping(DataTable dt_temp, string TableName)
+        {
+            SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(cn);
+
+            // Set the timeout.
+            sqlBulkCopy.BulkCopyTimeout = 700;
+
+            //Set the database table name
+            sqlBulkCopy.DestinationTableName = TableName;
+            sqlBulkCopy.ColumnMappings.Add("idWarehouseSKU", "idWarehouseSKU");
+            sqlBulkCopy.ColumnMappings.Add("MappingSKU", "MappingSKU");
+            sqlBulkCopy.ColumnMappings.Add("DateAdd", "DateAdd");
+            if (cn.State == ConnectionState.Closed)
+            {
+                cn.Open();
+            }
+            sqlBulkCopy.WriteToServer(dt_temp);
+            cn.Close();
+        }
+
+
+
     }
 }

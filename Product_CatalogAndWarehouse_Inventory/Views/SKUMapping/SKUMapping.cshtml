@@ -1,7 +1,114 @@
-﻿
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.SKUMapping
+
 @{
     ViewBag.Title = "SKUMapping";
 }
+@if (ViewBag.Message != null)
+{
+    <span style="color:red @Convert.ToString(ViewBag.color)">@ViewBag.Message</span>
+}
 
-<h2>SKUMapping</h2>
+<div class="ibox">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="ibox-content">
+
+            @*<div class="row">
+                @using (Html.BeginForm("SKUMapping", "SKUMapping", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="col-lg-4">
+                        <label class="form-label" for="customFile">Excel File</label>
+                        @Html.TextBoxFor(m => m.Fileupload, new { type = "file", @class = "form-control", id = "customFile", Name = "Fileupload" })
+                        @Html.ValidationMessageFor(m => m.Fileupload, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="form-label"></label>
+                        <input class="btn btn-success btn-block" type="submit" value="Upload" />
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+                }
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-users">
+                        <thead>
+                            <tr>
+                                <th>SerialNo</th>
+                                <th>WarehouseSKU</th>
+                                <th>MappingSKU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model.MappingList)
+                                {
+                                    <tr>
+                                       
+                                        <td>
+                                            @item.WarehouseSKU
+                                        </td>
+
+                                        <td>
+                                            @item.MappingSKU
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                            </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        //$(document).ready(function () {
+        //    $('.dataTables-users').DataTable({
+        //        lengthMenu: [5, 10, 15],
+        //        pageLength: 5,
+        //        responsive: true,
+        //        dom: '<"html5buttons"B>lTfgitp',
+        //        buttons: [
+
+        //            /*{ extend: 'csv' },*/
+
+        //            {
+        //                extend: 'csv', title: 'userlist',
+        //                exportOptions: {
+        //                    columns: [0, 1, 2, 3, 4, 5]
+        //                },
+
+
+        //                customize: function (win) {
+        //                    $(win.document.body).addClass('white-bg');
+        //                    $(win.document.body).css('font-size', '10px');
+
+        //                    $(win.document.body).find('table')
+        //                        .addClass('compact')
+        //                        .css('font-size', 'inherit');
+        //                }
+        //            }
+        //        ]
+
+        //    });
+
+        //});
+
+    </script>
+
+}
+
 

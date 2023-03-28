@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Basic Form</title>
+    <title> Registration | Registration Form</title>
     @Styles.Render("~/Content/css")
 </head>
 
@@ -76,16 +76,10 @@
                                             <div>
                                                 @Html.RadioButton("Gender", "Male")
                                                 <label for="Male">Male</label>
-                                                @*<label>
-                                                        <input type="radio" value="option1" id="optionsRadios1" name="Gender">Male
-                                                    </label>*@
                                             </div>
                                             <div>
                                                 @Html.RadioButton("Gender", "Female")
-                                                <label for="Female">Female</label>
-                                                @*<label>
-                                                        <input type="radio" value="option2" id="optionsRadios2" name="Gender">Female
-                                                    </label>*@
+                                                <label for="Male">Female</label>
                                             </div>
                                             @Html.ValidationMessageFor(m => m.Gender, "", new { @style = "color:red" })
                                         </div>
@@ -103,7 +97,6 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Password</label>
                                         <div class="col-lg-10">
-                                            @*<input type="password" class="form-control" name="Confirm_Password">*@
                                             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:red" })
                                         </div>
@@ -112,8 +105,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Confirm Password</label>
                                         <div class="col-lg-10">
-                                            @*<input type="password" class="form-control" name="Confirm_Password">*@
-                                            @Html.PasswordFor(m => m.Confirm_Password, new { @class = "form-control" })
+                                           @Html.PasswordFor(m => m.Confirm_Password, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.Confirm_Password, "", new { @style = "color:red" })
                                         </div>
                                     </div>
@@ -128,7 +120,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-4 col-sm-offset-2">
                                             Already Registered User?Click Here to Login
-                                            <a class="btn btn-w-m btn-success" href="https://localhost:44390/UserManagement/Login">Login</a>
+                                            <a class="btn btn-w-m btn-success" href="~/UserManagement/Login">Login</a>
                                         </div>
                                     </div>
                                 </form>

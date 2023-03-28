@@ -31,9 +31,10 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         [Required]
         [FileExtensionsValidation]
         //[RegularExpression("([a-zA-Z0-9\\s_\\\\.\\-:])+(.xls|.xlsx)$", ErrorMessage = "Only .xls or .xlsx file allowed")]
-        public HttpPostedFileBase fileupload { get; set; }                          
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public List<SKUMapping> List { get; set; }       
+        public HttpPostedFileBase fileupload { get; set; }    
+        public int serialNo { get; set; }
+        public string WarehouseSKU { get; set; }
+        public string MappingSKU { get; set; }
+        public List<SKUMapping> mappingSKUList { get; set; } = new List<SKUMapping>();
     }
 }

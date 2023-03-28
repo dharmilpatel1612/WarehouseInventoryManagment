@@ -16,116 +16,189 @@ using Microsoft.Ajax.Utilities;
 using System.Data.SqlClient;
 using System.Net.Http.Headers;
 using System.Configuration;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.Diagnostics;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System.Security.Cryptography;
+using System.Collections;
+using System.ComponentModel;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 
 namespace Product_CatalogAndWarehouse_Inventory.Controllers
 {
     public class SKUMappingController : Controller
     {
         Dal obj_dal = new Dal();
-        DataTable dt_SKUMapping = new DataTable();
-        private bool isAllValid;
+        DataTable dt_Excel = new DataTable();
+        DataTable dt_MappingSKUList = new DataTable();
+        StringBuilder sb = new StringBuilder();
+
+        public List<SKUMapping> mappingSKU()
+        {
+            List<SKUMapping> SKUList = new List<SKUMapping>();
+            // Used to check row count grater than 0
+            if (dt_MappingSKUList.Rows.Count > 0)
+            {
+                // code to be executed repeatedly until row count less than 0
+                for (int i = 0, count = 0; i < dt_MappingSKUList.Rows.Count; i++)
+                {
+                    var SKUdata = new SKUMapping();
+                    // Add serial number using row count in list
+                    SKUdata.serialNo = i + 1;
+                    // Get the value of WarehouseSKU
+                    SKUdata.WarehouseSKU = dt_MappingSKUList.Rows[i]["Warehouse_SKU"].ToString();
+                    // Get the value of MappingSKU
+                    SKUdata.MappingSKU = dt_MappingSKUList.Rows[i]["MappingSKU"].ToString();
+                    // Add SKUdata data into SKUList
+                    SKUList.Add(SKUdata);
+                    count++;
+                }
+            }
+            return SKUList;
+        }
 
         // GET: SKUMapping
         public ActionResult SKUMapping()
         {
-            return View();
-        }
-
-        //public async Task<List<SKUMapping>> importAsync()
-        public List<SKUMapping> importFile(HttpPostedFileBase file)
-        {
-            obj_dal = new Dal();
-            var list = new List<SKUMapping>();
-            // Set directory path
-            string path = Server.MapPath("~/Uploads/");
-            // if directory is alredy exists then remove it with all file and create new directory
-            if (Directory.Exists(path))
-            {
-                Directory.Delete(path, true);
-            }
-            Directory.CreateDirectory(path);
-
-            // For file path
-            string filePath = path + Path.GetFileName(file.FileName);
-            // Save as file in given file path
-            file.SaveAs(filePath);
-
-            using (var stream = new MemoryStream())
-            {
-                FileInfo existingFile = new FileInfo(filePath);
-                //stream.Position = 0;
-                //await file.CopyToAsync(stream);
-                using (ExcelPackage package = new ExcelPackage(existingFile))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
-                    // for file rowcount
-                    var rowcount = worksheet.Dimension.Rows;
-                    // code to be executed repeatedly until row count less than 2
-                    for (int i = 2,count = 1; i <= rowcount; i++)
-                    {
-                        SKUMapping user = new SKUMapping();
-                        // Get the value of Name from worksheet
-                        user.Name = worksheet.Cells[i, 1].Value.ToString().Trim();
-                        // Get the value of Email from worksheet
-                        user.Email = worksheet.Cells[i, 2].Value.ToString().Trim();
-                        // Check Name is Number and Email is valid or not.
-                        if (!IsLetter(user.Name) | !IsEmail(user.Email))
-                        {
-                            // Error message in red color
-                            ViewBag.color = "red";
-                            ViewBag.Message = "Invalid " + (count) + " row in excel.";
-                            isAllValid = false;
-                            count++;
-                        }
-                        else
-                        {
-                            // Add user data into list
-                            list.Add(user);
-                        }             
-                    }
-                }
-            }
-            return list;           
-        }
-
-        private bool IsLetter(string value)
-        {
-            //Verify whether entered Name is only chracters or not.
-            Regex regexLetter = new Regex(@"^[a-zA-Z]+$");
-            return regexLetter.IsMatch(value);
-        }
-        private bool IsEmail(string value)
-        {
-            //Verify whether entered Email is in valid format or not using regular expression.
-            Regex regexLetter = new Regex(@"^[A-Za-z0-9]+@[a-z]+.[a-z]{2,3}$");
-            return regexLetter.IsMatch(value);
+            SKUMapping sKUMapping = new SKUMapping();
+            /* Applied SELECT Query to get data of MappingSKU from in database */
+            sb.Clear();
+            sb.Append("SELECT w.Warehouse_SKU, STRING_AGG(s.MappingSKU, ', ') AS MappingSKU ");
+            sb.Append("FROM tbl_WarehouseSKU w ");
+            sb.Append("INNER JOIN tbl_SKUMapping s ON w.WarehouseSKU_Id = s.WarehouseSKU_Id ");
+            sb.Append("GROUP BY w.WarehouseSKU_Id,w.Warehouse_SKU");
+            // GET_DATATABLE function call from Dal class to fill the table data
+            dt_MappingSKUList = obj_dal.GET_DATATABLE(sb.ToString());
+            // Function call
+            sKUMapping.mappingSKUList = mappingSKU();
+            return View(sKUMapping);
         }
 
         [HttpPost]
         public ActionResult SKUMapping(SKUMapping sKUMapping)
         {
-            DataTable dt = new DataTable();
-            /* if extensions are .xls and .xlsx then call importFile()
-               otherwise return view */
-            string extention = Path.GetExtension(sKUMapping.fileupload.FileName);
-            if (extention != ".xls" & extention != ".xlsx")
+            try
             {
-                return View();
+                /* if extensions are .xls and .xlsx then call importFile()
+                otherwise return view */
+                string extention = Path.GetExtension(sKUMapping.fileupload.FileName);
+                if (extention != ".xls" & extention != ".xlsx")
+                {
+                    return View();
+                }
+                // Set directory path
+                string path = Server.MapPath("~/Uploads/");
+                // if directory is alredy exists then remove it with all file and create new directory
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                }
+                Directory.CreateDirectory(path);
+                // For file path
+                string filePath = path + Path.GetFileName(sKUMapping.fileupload.FileName);
+                // For File extension
+                string extension = Path.GetExtension(sKUMapping.fileupload.FileName);
+                // Save as file in given file path
+                sKUMapping.fileupload.SaveAs(filePath);
+
+                string conString = string.Empty;
+                switch (extension)
+                {
+                    case ".xls": //Excel 97-03.
+                        conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
+                        break;
+                    case ".xlsx": //Excel 07 and above.
+                        conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
+                        break;
+                }
+
+                dt_Excel = new DataTable();
+                conString = string.Format(conString, filePath);
+                using (OleDbConnection connExcel = new OleDbConnection(conString))
+                {
+                    using (OleDbCommand cmdExcel = new OleDbCommand())
+                    {
+                        using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                        {
+                            cmdExcel.Connection = connExcel;
+                            //Get the name of First Sheet.
+                            connExcel.Open();
+                            DataTable dtExcelSchema;
+                            dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                            string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                            connExcel.Close();
+
+                            //Read Data from First Sheet.
+                            connExcel.Open();
+                            cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                            odaExcel.SelectCommand = cmdExcel;
+                            odaExcel.Fill(dt_Excel);
+                            connExcel.Close();
+                        }
+                    }
+                }
+                // Validation for Warehouse_SKU column
+                if (dt_Excel.Columns.Count > 0 && dt_Excel.Columns[0].ColumnName == "Warehouse_SKU")
+                {
+                    sb.Append("DELETE from tbl_WarehouseSKU");
+                    obj_dal.EXECUTE_DML(sb.ToString());
+                    // BulkInsert for Warehousesku
+                    obj_dal.BulkInsertWarehouse(dt_Excel, "tbl_WarehouseSKU");
+                    sb.Clear();
+                    sb.Append("DELETE From tbl_WarehouseSKU WHERE Warehouse_SKU Is Null");
+                    obj_dal.EXECUTE_DML(sb.ToString());
+                    DataTable dt_WarehouseSKU = new DataTable();
+                    DataTable dt_MappingSKU = new DataTable();
+                    // Add column in dt_MappingSKU table
+                    dt_MappingSKU.Columns.Add("WarehouseSKU_Id", typeof(Guid));
+                    dt_MappingSKU.Columns.Add("mapping_SKU");
+                    sb.Clear();
+                    // Applied select query to get data of tbl_WarehouseSKU from databse
+                    sb.Append("select * from tbl_WarehouseSKU");
+                    dt_WarehouseSKU = obj_dal.GET_DATATABLE(sb.ToString());
+                    // loop to be executed repeatedly until row count less than 0
+                    for (int i = 0; i < dt_WarehouseSKU.Rows.Count; i++)
+                    {
+                        // Get WarehouseSKU_Id store into var id
+                        var id = dt_WarehouseSKU.Rows[i]["WarehouseSKU_Id"].ToString();
+                        // Get Warehouse_SKU and store into variable
+                        var SelectedWarehouseSKU = dt_Excel.Select($"Warehouse_SKU='{dt_WarehouseSKU.Rows[i]["Warehouse_SKU"].ToString()}'");
+                        /* If statement used to check warehouse_SKU length is 0 or not
+                         * if length greather than 0 then add WarehouseSKU_Id,mapping_SKU into dt_MappingSKU table.
+                         * ItemArray.Skip(1) - used to skip first row
+                        */
+                        if (SelectedWarehouseSKU.Length > 0)
+                        {
+                            foreach (var MappingSKU in SelectedWarehouseSKU[0].ItemArray.Skip(1))
+                            {
+                                if (!string.IsNullOrEmpty(MappingSKU.ToString()))
+                                {
+                                    DataRow dr = dt_MappingSKU.NewRow();
+                                    dr["WarehouseSKU_Id"] = id.ToString();
+                                    dr["mapping_SKU"] = MappingSKU.ToString();
+                                    dt_MappingSKU.Rows.Add(dr);
+                                }
+                            }
+                        }
+                    }
+                    // BulkInsert for SKUMapping
+                    obj_dal.BulkInsertMappingSKU(dt_MappingSKU, "tbl_SKUMapping");
+                    return RedirectToAction("SKUMapping");
+                }
+                else
+                {
+                    // Error message in red color
+                    ViewBag.color = "Red";
+                    ViewBag.Message = "Invalid Column Name";
+                }
             }
-            // function call
-            sKUMapping.List = importFile(sKUMapping.fileupload);
-            // using SqlBulkCopy = new SqlBulkCopy(obj_dal.EXECUTE_DML();
-            string conString = string.Empty;
-            SqlConnection cn = new SqlConnection();
-            cn.ConnectionString = ConfigurationManager.ConnectionStrings["db-Registration"].ConnectionString;
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection =  cn;
-            SqlBulkCopy bulkCopy = new SqlBulkCopy(cn);
-            bulkCopy.DestinationTableName = "tbl_Registration";
-           // bulkCopy.ColumnMappings.Add("Name", "Name");
-            cn.Open();
-            bulkCopy.WriteToServer((IDataReader)sKUMapping.List);
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
             return View(sKUMapping);
         }
     }
 }
+
+

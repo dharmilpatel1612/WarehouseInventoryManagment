@@ -47,7 +47,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             return userdataList;
         }
 
-
         public ActionResult Registration()
         {
             UserModel model = new UserModel();
@@ -100,7 +99,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         {
             obj_dal = new Dal();
             sb = new StringBuilder();
-
             // If statement condition used for Update data and else statement used for Insert data
             if (ID != null)
             {
@@ -165,7 +163,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             return View(userModel);
         }
 
-        //[Route("")]
         public ActionResult UserList(UserModel userModel)
         {
             // Stored seesion value in variable
@@ -249,7 +246,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             TempData["Message"] = "Update";
             return RedirectToAction("Registration", new { ID = registration_id });
         }
-
         public ActionResult Login()
         {
             // Stored seesion value in variable

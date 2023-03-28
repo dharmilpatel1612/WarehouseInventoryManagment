@@ -4,11 +4,13 @@
     ViewBag.Title = "SKUMapping";
 }
 
-@{
-    if (ViewBag.Message != null)
-    {
-    <span style="color:@Convert.ToString(ViewBag.color)">@ViewBag.Message</span> 
-    }
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.Message
+        <a class="alert-link" href="#"></a>
+    </div>
 }
 
 <div class="ibox float-e-margins">
@@ -17,18 +19,89 @@
             <div class="form-group">
                 <div class="col-lg-4">
                     <label class="form-lable" for="customFile">Select Excel file</label>
-                    @*<input type="file" class="form-control" id="customFile" />*@
                     @Html.TextBoxFor(m => m.fileupload, new { type = "file", @class = "form-control", id = "customFile" })
                     @Html.ValidationMessageFor(m => m.fileupload, "", new { @style = "color:red" })
                 </div>
                 <div class="col-lg-4" style="margin-top:22px">
-                    @*<input class="btn btn-w-m btn-primary" type="submit" value="Upload"/>*@
                     <button class="btn btn-w-m btn-primary" type="submit">Upload</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<div class="ibox-content">
+    <table class="table table-striped table-bordered table-hover dataTables-example">
+        <thead>
+            <tr>
+                <th style="width:70px">Serial No.</th>
+                <th>Warehouse_SKU</th>
+                <th>MappingSKU</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model?.mappingSKUList)
+                {
+                    <tr>
+                        <td>
+                            @item.serialNo
+                        </td>
+                        <td>
+                            @item.WarehouseSKU
+                        </td>
+                        <td>
+                            <!--If satatement is used to check mappingsku legth.legth is grather than 120
+                                then return new string of mappingSKU otherwise return mappingSKU value
+                                substring is used to extracts characters between two positions from string and returns substring-->
+                            @if (item.MappingSKU.Length > 120)
+                            {
+                                @(item.MappingSKU.Substring(0, 120)+"...")
+                            }
+                            else
+                            {
+                                @item.MappingSKU
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<!--Scripts for Pagination and Searching-->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.dataTables-example').DataTable({
+                lengthMenu: [50, 100, 250, 500],
+                pageLength: 100,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+
+                    {
+                        extend: 'csv', title: 'MappingSKU',
+                        exportOptions: {
+                            columns: [0, 1, 2]
+                        },
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
 
 
 

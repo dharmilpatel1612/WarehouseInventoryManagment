@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.WebPages.Html;
 
 namespace Product_CatalogAndWarehouse_Inventory.Models
 {
@@ -36,5 +37,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         public string WarehouseSKU { get; set; }
         public string MappingSKU { get; set; }
         public List<SKUMapping> mappingSKUList { get; set; } = new List<SKUMapping>();
+        public List<SKUMapping> RowExpansionList { get; set; } = new List<SKUMapping>();
     }
 }

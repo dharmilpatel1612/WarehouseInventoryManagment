@@ -31,16 +31,17 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         Dal obj_dal = new Dal();
         DataTable dt_Excel = new DataTable();
         DataTable dt_MappingSKUList = new DataTable();
+        DataTable dt_RowExpansion = new DataTable();
         StringBuilder sb = new StringBuilder();
 
-        public List<SKUMapping> mappingSKU()
+        public List<SKUMapping> mappingSKU()      
         {
             List<SKUMapping> SKUList = new List<SKUMapping>();
             // Used to check row count grater than 0
             if (dt_MappingSKUList.Rows.Count > 0)
             {
                 // code to be executed repeatedly until row count less than 0
-                for (int i = 0, count = 0; i < dt_MappingSKUList.Rows.Count; i++)
+                for (int i = 0; i < dt_MappingSKUList.Rows.Count; i++)
                 {
                     var SKUdata = new SKUMapping();
                     // Add serial number using row count in list
@@ -51,17 +52,45 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     SKUdata.MappingSKU = dt_MappingSKUList.Rows[i]["MappingSKU"].ToString();
                     // Add SKUdata data into SKUList
                     SKUList.Add(SKUdata);
-                    count++;
                 }
             }
             return SKUList;
         }
+        public List<SKUMapping> RowExpansionSKU()
+        {
+            List<SKUMapping> RowMappingSKU = new List<SKUMapping>();
+            if (dt_RowExpansion.Rows.Count > 0)
+            {
+                // code to be executed repeatedly until row count less than 0
+                for (int i = 0; i < dt_RowExpansion.Rows.Count; i++)
+                {
+                    var SKUValue = new SKUMapping();
+                    // Get the value of MappingSKU
+                    SKUValue.MappingSKU = dt_RowExpansion.Rows[i]["MappingSKU"].ToString();
+                    // Add SKUValue data into RowMappingSKU
+                    RowMappingSKU.Add(SKUValue);
+                }
+            }
+            return RowMappingSKU;
+        }
 
         // GET: SKUMapping
-        public ActionResult SKUMapping()
-        {
+        public ActionResult SKUMapping(string warehouseSKU)
+        {          
             SKUMapping sKUMapping = new SKUMapping();
-            /* Applied SELECT Query to get data of MappingSKU from in database */
+            // if warehouseSKU value is not null then MappingSKU records add into model RowExpansionList.
+            if (warehouseSKU != null)
+            {
+                // Applied SELECT Query to get data of MappingSKU from in database using WarehouseSKU.
+                sb.Append("SELECT s.MappingSKU From tbl_SKUMapping s ");
+                sb.Append("INNER JOIN tbl_WarehouseSKU w ON w.WarehouseSKU_Id = s.WarehouseSKU_Id ");
+                sb.Append("WHERE w.Warehouse_SKU = '" + warehouseSKU + "'");
+                // GET_DATATABLE function call from Dal class to fill the table data
+                dt_RowExpansion = obj_dal.GET_DATATABLE(sb.ToString());
+                // Function call
+                sKUMapping.RowExpansionList = RowExpansionSKU();
+            }
+            // Applied SELECT Query to get data of MappingSKU from in database 
             sb.Clear();
             sb.Append("SELECT w.Warehouse_SKU, STRING_AGG(s.MappingSKU, ', ') AS MappingSKU ");
             sb.Append("FROM tbl_WarehouseSKU w ");
@@ -70,7 +99,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             // GET_DATATABLE function call from Dal class to fill the table data
             dt_MappingSKUList = obj_dal.GET_DATATABLE(sb.ToString());
             // Function call
-            sKUMapping.mappingSKUList = mappingSKU();
+            sKUMapping.mappingSKUList = mappingSKU();           
             return View(sKUMapping);
         }
 
@@ -197,7 +226,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 ViewBag.Message = ex.Message;
             }
             return View(sKUMapping);
-        }
+        }       
     }
 }
 

@@ -38,7 +38,6 @@ namespace Product_catalog_and_Warehouse_inventory1.Models
         public List<Usermangement> usermodel { get; set; }
         public string search_keyword { get; set; }
         public double? PagedList { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@#!%*?&])[A-Za-z\d$@#!%*?&]{8,}$", ErrorMessage = "Min 8 char atleast 1 UpperCase Alphabet, 1 LowerCase Alphabet, 1 Number and 1 Special Char")]

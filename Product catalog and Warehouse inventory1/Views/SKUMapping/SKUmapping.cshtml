@@ -1,0 +1,131 @@
+﻿@model Product_catalog_and_Warehouse_inventory1.Models.SKUMapping
+@{
+    ViewBag.Title = "SKUmapping";
+}
+
+<div class="ibox">
+    <div class="ibox-content">
+
+        <div class="row">
+            @using (Html.BeginForm("SKUmapping", "SKUmapping", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="col-lg-4">
+                    <label class="form-label" for="customFile">Excel File</label>
+                    @Html.TextBoxFor(m => m.Uploadfile, new { type = "file", @class = "form-control", id = "customFile", Name = "Uploadfile" })
+                    @Html.ValidationMessageFor(m => m.Uploadfile, "", new { @style = "color:red" })
+                </div>
+                <div class="col-lg-2">
+                    <label class="form-label"></label>
+                    <input class="btn btn-success btn-block" type="submit" value="Upload" />
+                </div>
+                <div class="col-lg-6">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}*@
+
+@*@{
+    ViewBag.title = "Userlist";
+}
+
+@if (TempData["Message"] != null)
+{
+    <span style="color:green"> @TempData["Message"]</span>
+}*@
+<div class="ibox">
+    <div class="col-lg-12">
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>WareHouseSKU</th>
+                            <th>MappingSKU</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.MappingList)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.WareHouseSKU
+                                    </td>                       
+                                    <td onclick="location.href='@Url.Action("SKUmapping", "SKUmapping", new {WareHouseSKU=item.WareHouseSKU })'">
+
+                                        @if (item.MappingSKU.Length < 120)
+                                        {
+                                             @item.MappingSKU
+                                        }
+                                        else
+                                        {
+                                            @(item.MappingSKU.Substring(0,120)+"......");
+                                        }
+
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Page-Level Scripts -->
+
+    @section scripts{
+
+        <script>
+            $(document).ready(function () {
+                $('.dataTables-example').DataTable({
+                    lengthMenu: [5, 10, 15],
+                    pageLength: 5,
+                    responsive: false,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [
+
+                        //{
+                        //    extend: 'csv'
+                        //},
+
+                        {
+                            extend: 'csv', title: 'MappingList',
+                            exportOptions: {
+                                columns: [0, 1]
+                            },
+                            customize: function (win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }
+                    ]
+
+                });
+
+            });
+        </script>
+    }
+
+
+
+

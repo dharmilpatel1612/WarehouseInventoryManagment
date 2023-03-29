@@ -31,7 +31,8 @@ namespace Product_catalog_and_Warehouse_inventory1
                       "~/Admin_Templete/font-awesome/css/font-awesome.css",
                       "~/Admin_Templete/css/plugins/dataTables/datatables.min.css",
                       "~/Admin_Templete/css/animate.css",
-                      "~/Admin_Templete/css/style.css"));
+                      "~/Admin_Templete/css/style.css",
+                      "~/Admin_Templete/css/plugins/jasny/jasny-bootstrap.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Admin_Templete/js/jquery-2.1.1.js",
@@ -40,7 +41,8 @@ namespace Product_catalog_and_Warehouse_inventory1
                       "~/Admin_Templete/js/plugins/slimscroll/jquery.slimscroll.min.js",
                       "~/Admin_Templete/js/inspinia.js",
                       "~/Admin_Templete/js/plugins/pace/pace.min.js",
-                      "~/Admin_Templete/js/plugins/dataTables/datatables.min.js"));
+                      "~/Admin_Templete/js/plugins/dataTables/datatables.min.js",
+                      "~/Admin_Templete/js/plugins/jasny/jasny-bootstrap.min.js"));
          
 
         }

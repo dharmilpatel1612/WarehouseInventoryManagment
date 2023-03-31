@@ -1,0 +1,53 @@
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.SKUMapping
+
+@Styles.Render("~/Content/css")
+
+<div id="id1">
+    <table id="tblmappingSKUpartial" class="table table-striped table-bordered table-hover dataTables-Design">
+        <thead>
+            <tr>
+                <th>MappingSKU</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model?.RowExpansionList)
+                {
+                    <tr>
+                        <td>
+                            @item.MappingSKU
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/js")
+
+<!--Scripts for Pagination and Searching-->
+<script>
+    $(document).ready(function () {
+
+        $('.dataTables-Design').DataTable({
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 5,
+            responsive: true,
+            dom: '<"html5buttons">lTfgitp',
+            buttons: [
+                {
+                    customize: function (win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).find('table')
+                            .addClass('compact');
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+

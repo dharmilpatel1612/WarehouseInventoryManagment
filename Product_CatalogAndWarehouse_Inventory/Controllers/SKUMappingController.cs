@@ -74,9 +74,8 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             return RowMappingSKU;
         }
 
-        // GET: SKUMapping
-        public ActionResult SKUMapping(string warehouseSKU)
-        {          
+        public PartialViewResult GetMappingSku(string warehouseSKU)
+        {
             SKUMapping sKUMapping = new SKUMapping();
             // if warehouseSKU value is not null then MappingSKU records add into model RowExpansionList.
             if (warehouseSKU != null)
@@ -90,6 +89,13 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 // Function call
                 sKUMapping.RowExpansionList = RowExpansionSKU();
             }
+            return PartialView(sKUMapping);
+        }
+
+        // GET: SKUMapping
+        public ActionResult SKUMapping(string warehouseSKU)
+        {          
+            SKUMapping sKUMapping = new SKUMapping();           
             // Applied SELECT Query to get data of MappingSKU from in database 
             sb.Clear();
             sb.Append("SELECT w.Warehouse_SKU, STRING_AGG(s.MappingSKU, ', ') AS MappingSKU ");

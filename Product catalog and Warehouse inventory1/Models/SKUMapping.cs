@@ -35,7 +35,8 @@ namespace Product_catalog_and_Warehouse_inventory1.Models
         [Required]
         public string MappingSKU { get; set; }
         public List<SKUMapping> MappingList { get; set; }
-        
+        public List<SKUMapping> RowMappingSKU { get; set; } = new List<SKUMapping>();
+        List<SKUMapping> mappinguserList=new List<SKUMapping>();
     }
 
 

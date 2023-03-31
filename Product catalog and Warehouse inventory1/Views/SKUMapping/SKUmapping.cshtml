@@ -86,45 +86,95 @@
         </div>
     </div>
 </div>
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="ibox">
+                    <div class="col-lg-12">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>MappingSKU</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model.RowMappingSKU)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.MappingSKU
+                                                        </td>
+                                                    </tr>
 
-    <!-- Page-Level Scripts -->
+                                                }
 
-    @section scripts{
+                                            }
 
-        <script>
-            $(document).ready(function () {
-                $('.dataTables-example').DataTable({
-                    lengthMenu: [5, 10, 15],
-                    pageLength: 5,
-                    responsive: false,
-                    dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        //{
-                        //    extend: 'csv'
-                        //},
+  <!-- Page-Level Scripts -->
 
-                        {
-                            extend: 'csv', title: 'MappingList',
-                            exportOptions: {
-                                columns: [0, 1]
-                            },
-                            customize: function (win) {
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
+   @section scripts{
 
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                            }
-                        }
-                    ]
+   <script>
+       $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+           const params = Object.fromEntries(urlSearchParams.entries());
+           if (params.WareHouseSKU != undefined) {
+                console.log(params.WareHouseSKU);
+                $('#partialModal').modal('show');
+            }
+            //console.log(params);
+       });        
+        $(document).ready(function () {
+             $('.dataTables-example').DataTable({
+                 lengthMenu: [5, 10, 15],
+                 pageLength: 5,
+                 responsive: false,
+                 dom: '<"html5buttons"B>lTfgitp',
+                 buttons: [
 
-                });
+                            //{
+                            //    extend: 'csv'
+                            //},
 
-            });
+                         {
+                           extend: 'csv', title: 'MappingList',
+                             exportOptions: {
+                               columns: [0, 1]
+                               },
+                             customize: function (win) {
+                                  $(win.document.body).addClass('white-bg');
+                                  $(win.document.body).css('font-size', '10px');
+
+                                  $(win.document.body).find('table')
+                                  .addClass('compact')
+                                  .css('font-size', 'inherit');
+                             }
+                         }
+                 ]
+
+             });
+
+             });
         </script>
-    }
+   }
 
 
 

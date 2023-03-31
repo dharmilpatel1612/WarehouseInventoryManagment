@@ -23,7 +23,7 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
         SqlCommand cmd;
         StringBuilder sb;
         Dal objDal;
-        DataTable dtmappingSKU, dtExcelData;
+        DataTable dtmappingSKU, dtExcelData,dtrowSKU;
         private object stream;
         private string List;
 
@@ -55,10 +55,32 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
 
         }
         // GET: SKUmapping
-        public ActionResult SKUmapping()
+        public ActionResult SKUmapping(string WareHouseSKU)
         {
             SKUMapping skumapping = new SKUMapping();
             skumapping.MappingList = MappingList();
+            if(!string.IsNullOrEmpty(WareHouseSKU))
+            {
+                sb = new StringBuilder();
+                sb.Clear();
+                sb.Append("select m.MappingSKU from tblmappingSKU m ");
+                sb.Append("inner join tblwarehouseSKU w on w.IdWareHouseSKU=m.IdWareHouseSKU ");
+                sb.Append("where w.WareHouseSKU='" + WareHouseSKU + "'");
+                DataTable Rowmappingsku = new DataTable();
+                Rowmappingsku = objDal.GetDataTable(sb.ToString());
+                List<SKUMapping> mappinguserList = new List<SKUMapping>();
+                if (Rowmappingsku.Rows.Count > 0)
+                {
+                    for (int i = 0; i < Rowmappingsku.Rows.Count; i++)
+                    {
+                        var user = new SKUMapping();
+                        user.MappingSKU = Rowmappingsku.Rows[i]["MappingSKU"].ToString();
+                        mappinguserList.Add(user);
+                    }
+                    skumapping.RowMappingSKU = mappinguserList;
+                }
+            }
+            
             return View(skumapping);
         }
 
@@ -191,6 +213,34 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
 
 
         }
+        [HttpGet]
+        public ActionResult RowClickMappingSKU(string WareHouseSKU)
+        {
+            SKUMapping skuMapping = new SKUMapping();
+                objDal = new Dal();
+                sb=new StringBuilder();
+                sb.Clear();
+                sb.Append("select m.MappingSKU from tblmappingSKU m ");
+                sb.Append("inner join tblwarehouseSKU w on w.IdWareHouseSKU=m.IdWareHouseSKU ");
+                sb.Append("where w.WareHouseSKU='" + WareHouseSKU + "'");
+                DataTable Rowmappingsku = new DataTable();
+                Rowmappingsku = objDal.GetDataTable(sb.ToString());
+                List<SKUMapping> mappinguserList = new List<SKUMapping>();
+            if (Rowmappingsku.Rows.Count > 0)
+            {
+                for (int i = 0; i < Rowmappingsku.Rows.Count; i++)
+                {
+                    var user = new SKUMapping();
+                    user.MappingSKU = Rowmappingsku.Rows[i]["MappingSKU"].ToString();
+                    mappinguserList.Add(user);
+                }
+                skuMapping.RowMappingSKU = mappinguserList;
+            }
+            return RedirectToAction("SKUMapping");
+                          
+       
+        }
+        
         
         
     }

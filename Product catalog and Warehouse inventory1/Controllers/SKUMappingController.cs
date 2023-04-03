@@ -32,12 +32,14 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
         {
             objDal = new Dal();
             sb = new StringBuilder();
+            //applied select query to get data of mappingsku from in database
             sb.Clear();
-            sb.Append("select w.WareHouseSKU,STRING_AGG(m.MappingSKU,',')as MappingSKU ");
+            sb.Append("select w.WareHouseSKU,w.IdWareHouseSKU,STRING_AGG(m.MappingSKU,',')as MappingSKU ");
             sb.Append("from tblwarehouseSKU w ");
             sb.Append("inner join tblmappingSKU m on w.IdWareHouseSKU= m.IdWareHouseSKU ");
             sb.Append("Group BY w.IdWareHouseSKU,w.WareHouseSKU ");
             DataTable SKUMapping = new DataTable();
+            //getdatatable function call from dal class to fill the table data
             SKUMapping = objDal.GetDataTable(sb.ToString());
             List<SKUMapping> mappinguserList = new List<SKUMapping>();
             if (SKUMapping.Rows.Count > 0)
@@ -45,8 +47,10 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
                 for (int i = 0; i < SKUMapping.Rows.Count; i++)
                 {
                     var user = new SKUMapping();
-                    user.WareHouseSKU = SKUMapping.Rows[i]["WareHouseSKU"].ToString();
+                    user.IdWareHouseSKU = SKUMapping.Rows[i]["IdWareHouseSKU"].ToString();
                     user.MappingSKU = SKUMapping.Rows[i]["MappingSKU"].ToString();
+                    user.WareHouseSKU = SKUMapping.Rows[i]["WareHouseSKU"].ToString();
+
                     //add user data into user
                     mappinguserList.Add(user);
                 }
@@ -62,11 +66,13 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
             if(!string.IsNullOrEmpty(WareHouseSKU))
             {
                 sb = new StringBuilder();
+                //applied select query to get data of mappingsku from in database using Warehousesku
                 sb.Clear();
                 sb.Append("select m.MappingSKU from tblmappingSKU m ");
                 sb.Append("inner join tblwarehouseSKU w on w.IdWareHouseSKU=m.IdWareHouseSKU ");
                 sb.Append("where w.WareHouseSKU='" + WareHouseSKU + "'");
                 DataTable Rowmappingsku = new DataTable();
+                //getdatatable function call from dal class to fill the table data
                 Rowmappingsku = objDal.GetDataTable(sb.ToString());
                 List<SKUMapping> mappinguserList = new List<SKUMapping>();
                 if (Rowmappingsku.Rows.Count > 0)
@@ -77,11 +83,44 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
                         user.MappingSKU = Rowmappingsku.Rows[i]["MappingSKU"].ToString();
                         mappinguserList.Add(user);
                     }
+                    //function call
                     skumapping.RowMappingSKU = mappinguserList;
                 }
             }
-            
+
             return View(skumapping);
+        }
+
+        public JsonResult GetMappingSKU(string IdWareHouseSKU)
+        {
+            SKUMapping skumapping = new SKUMapping();
+            if (!string.IsNullOrEmpty(IdWareHouseSKU))
+            {
+               
+                objDal = new Dal();
+                sb = new StringBuilder();
+                //applied select query to get data of IdWareHouseSKU from in database
+                sb.Clear();
+                sb.Append("select m.MappingSKU from tblmappingSKU m ");
+                sb.Append("where m.IdWareHouseSKU ='"+ IdWareHouseSKU + "'");              
+                DataTable Rowmappingsku = new DataTable();
+                //getdatatable function call from dal class to fill the table data
+                Rowmappingsku = objDal.GetDataTable(sb.ToString());
+                List<SKUMapping> mappinguserList = new List<SKUMapping>();
+                if (Rowmappingsku.Rows.Count > 0)
+                {
+                    for (int i = 0; i < Rowmappingsku.Rows.Count; i++)
+                    {
+                        var user = new SKUMapping();
+                        user.MappingSKU = Rowmappingsku.Rows[i]["MappingSKU"].ToString();
+                        mappinguserList.Add(user);
+                    }
+                    //function call
+                    skumapping.RowMappingSKU = mappinguserList;
+                }
+            }
+
+            return Json(skumapping, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -95,7 +134,7 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
-
+                //if extensions are .xls and .xlsx then call importfile()
                 filePath = path + Path.GetFileName(skuMapping.Uploadfile.FileName);
                 string extension = Path.GetExtension(skuMapping.Uploadfile.FileName);
                 skuMapping.Uploadfile.SaveAs(filePath);

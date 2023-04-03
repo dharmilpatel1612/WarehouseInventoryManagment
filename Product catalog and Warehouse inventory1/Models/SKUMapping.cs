@@ -31,6 +31,7 @@ namespace Product_catalog_and_Warehouse_inventory1.Models
         ////[RegularExpression("([a-zA-Z0-9\\s_\\\\.\\-:])+(.xls|.xlsx)$", ErrorMessage = "Only .xls OR .xlsx excel file allowed")]
         public HttpPostedFileBase Uploadfile { get; set; }
         [Required]
+        public string IdWareHouseSKU { get; set; }
         public string WareHouseSKU { get; set; }
         [Required]
         public string MappingSKU { get; set; }

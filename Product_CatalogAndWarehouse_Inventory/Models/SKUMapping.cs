@@ -25,19 +25,25 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
     }
     public class SKUMapping
     {
-       [Required]
-       [FileExtensionValidation]
-       //[RegularExpression("([a-zA-Z0-9\\s_\\\\.\\-:])+(.xls|.xlsx)$", ErrorMessage ="only .xls and .xlsx file allow")]
-       public HttpPostedFileBase Fileupload{ get; set; }
-       public int SerialNo { get; set; }
-       [Required]
-       public string WarehouseSKU{ get; set; }
-       [Required]
-       public string MappingSKU{ get; set; }
-       //public List<SKUMapping> MappingList { get; set; } 
-        //List<SKUMapping> mappingdataList = new List<SKUMapping>();
+        [Required]
+        [FileExtensionValidation]
+        //[RegularExpression("([a-zA-Z0-9\\s_\\\\.\\-:])+(.xls|.xlsx)$", ErrorMessage ="only .xls and .xlsx file allow")]
+        public HttpPostedFileBase Fileupload { get; set; }
+
+        [Required]
+        public string WarehouseSKU { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string MappingSKU { get; set; }
+
+        [Required]
+        public string idWarehouseSKU {get; set; }
+
+        public List<SKUMapping> MappingList { get; set; } = new List<SKUMapping>();
+        public List<SKUMapping> MappingRowList { get; set; } = new List<SKUMapping>();
 
 
     }
-  
+
 }

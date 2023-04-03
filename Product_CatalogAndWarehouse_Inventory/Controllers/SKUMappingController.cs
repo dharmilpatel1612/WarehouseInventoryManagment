@@ -87,7 +87,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 // GET_DATATABLE function call from Dal class to fill the table data
                 dt_RowExpansion = obj_dal.GET_DATATABLE(sb.ToString());
                 // Function call
-                sKUMapping.RowExpansionList = RowExpansionSKU();
+                sKUMapping.RowExpansionList = RowExpansionSKU();             
             }
             return PartialView(sKUMapping);
         }

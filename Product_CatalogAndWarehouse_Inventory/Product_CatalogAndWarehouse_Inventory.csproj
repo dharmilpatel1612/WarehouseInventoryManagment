@@ -135,7 +135,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\iFormFile.cs" />
     <Compile Include="Controllers\SKUMappingController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Dal.cs" />

@@ -35,7 +35,7 @@
         <thead>
             <tr>
                 <th style="width:70px">Serial No.</th>
-                <th>Warehouse_SKU</th>
+                <th style="width:120px">Warehouse_SKU</th>
                 <th>MappingSKU</th>
             </tr>
         </thead>
@@ -44,7 +44,7 @@
             {
                 foreach (var item in Model?.mappingSKUList)
                 {
-                    <tr style="cursor:pointer">
+                    <tr style="cursor:pointer" >
                         <td>
                             @item.serialNo
                         </td>
@@ -76,17 +76,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <a href="#" data-dismiss="modal"> </a>
-                <span id="myModalLabel" style="margin-left:20px;margin-bottom:100px;"><font size="+2"><b>MappingSKU List</b></font></span>
-                <button class="btn btn-warning btn-circle" type="button" data-dismiss="modal" style="margin-left:300px">
-                    <i class="fa fa-times"></i>
-                </button>
+                <div class="ibox-tools">
+                    <span id="myModalLabel" style="margin-right:335px;"><font size="+2"><b>MappingSKU List</b></font></span>
+                    <a class="close-link" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
             </div>
-            <div class="modal-body">              
-                    <fieldset id="modal_form">
-                    </fieldset>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    </div>
+            <div class="modal-body">
+                <fieldset id="modal_form">
+                </fieldset>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -94,19 +96,18 @@
 
 <!--Scripts for Pagination and Searching-->
 @section scripts{
-    <script>       
-        $("#tblmappingSKU").on('click', 'tr', function () {          
-                var warehouseSKU = $(this).find("td:nth-child(2)").text().trim();
-                console.log(warehouseSKU);
-                $(this).toggleClass("select");
+    <script>
 
+        $("#tblmappingSKU").on('click', 'tr', function () {
+                var warehouseSKU = $(this).find("td:nth-child(2)").text().trim();
+        
                 $.ajax({
                     url : '@Url.Action("GetMappingSku", "SKUMapping")',
                     method: 'GET',
                     data: { warehouseSKU: warehouseSKU },
                     success: function (response) {
-                        console.log(response);
                         $("#modal_form").html(response);
+                        DatatableModal()
                         $("#editModal").modal('show');
                         
                     },
@@ -117,7 +118,25 @@
                         alert(response.responseText);
                     }
                 });
-        });       
+        });
+
+        function DatatableModal() {
+            $('.dataTables-Design').DataTable({
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5,
+                responsive: true,
+                dom: '<"html5buttons">lTfgitp',
+                buttons: [
+                    {
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).find('table')
+                                .addClass('compact');
+                        }
+                    }
+                ]
+            });
+        }
 
         $(document).ready(function () {
             $('.dataTables-example').DataTable({
@@ -143,7 +162,7 @@
                     }
                 ]
             });
-        });       
+        });
     </script>
 }
 

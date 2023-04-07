@@ -145,12 +145,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CatelogueProductController.cs" />
     <Compile Include="Controllers\SKUmappingController.cs" />
     <Compile Include="Controllers\UsermangementController.cs" />
     <Compile Include="Dal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CatelogueModel.cs" />
     <Compile Include="Models\SKUMapping.cs" />
     <Compile Include="Models\Usermangement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1701,6 +1703,8 @@
     <Content Include="Views\Usermangement\Login.cshtml" />
     <Content Include="Views\Usermangement\Registration.cshtml" />
     <Content Include="Views\SKUMapping\SKUmapping.cshtml" />
+    <Content Include="Views\Cateogue.cshtml" />
+    <Content Include="Views\CatelogueProduct\catelogueproduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

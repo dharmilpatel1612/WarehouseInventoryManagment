@@ -1,0 +1,236 @@
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogue
+
+@{
+    ViewBag.Title = "Add Catalogue Product";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        Add Catalogue Product
+    </div>
+    <form method="post">
+        <div class="panel-body">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="min-height:820px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Name:</label>
+                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ProductName, "", new { @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Warehouse SKU:</label>
+                                @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.WarehouseSKU, "", new { @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>HS Code:</label>
+                                @Html.TextBox("hscode", "", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align:center">
+                            <label>Product Dimensions:</label>
+                        </div>
+                        <hr />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Width (CM):</label>
+                                @Html.TextBox("Width", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Length (CM):</label>
+                                @Html.TextBox("Length", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Height (CM):</label>
+                                @Html.TextBox("Height", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Material Composition:</label>
+                                @Html.TextBox("MaterialComposition", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Varsany Bag:</label>
+                                @Html.TextBox("VarsanyBag", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Colour:</label>
+                                @Html.TextBox("Colour", "", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Weight (KG):</label>
+                                @Html.TextBox("ProductWeight", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Box Size (CM):</label>
+                                @Html.TextBox("BoxSize", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Box Quantity:</label>
+                                @Html.TextBox("BoxQuantity", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Manufacturer:</label>
+                                @Html.TextBox("Manufacturer", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Mailing Bag:</label>
+                                @Html.TextBox("MailingBag", "", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Size:</label>
+                                @Html.TextBox("Size", "", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="min-height:820px">
+                        <div class="form-group" style="text-align:center">
+                            <label>Cost</label>
+                        </div>
+                        <hr />
+                        <div class="col-lg-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Product Cost:</label>
+                                    @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Commision (%):</label>
+                                    @Html.TextBox("Commision", "", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Shipping Cost f/CN:</label>
+                                    @Html.TextBox("ShippingCost", "", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Duty (%):</label>
+                                    @Html.TextBox("Duty", "", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group" style="text-align:center">
+                                <label>Total Cost</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Chinese Yuan</label>
+                                    @Html.TextBox("ChineseYuan", "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                </div>
+                                <div class="form-group">
+                                    <label>US Dollar</label>
+                                    @Html.TextBox("USDollar", "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Euros</label>
+                                    @Html.TextBox("Euros", "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Cost</label>
+                                    @Html.TextBox("TotalCost:", "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="min-height:820px">
+                        <div class="form-group">
+                            <label>Product Image</label>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <small>IMAGE FORMAT MUST BE JPG,PNG.</small>
+                                <div id="drop-zone">
+                                    <img src="" alt="" id="dropzone-img">
+                                    <p>Drop image or click to upload</p>
+                                    <input type="file" id="uploadimg" hidden />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-left:20px">
+                            <a href=""><i class="fa fa-trash" style="color:red;">Delete Attachment</i></a>
+                        </div>
+                        <div class="form-group" style="margin-left:20px">
+                            <button class="btn btn-white" type="button" data-dismiss="">Cancel</button>
+                            <button class="btn btn-w-m btn-primary" type="submit">Save Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+    <script>
+        const dropZone = document.querySelector('#drop-zone');
+        console.log(dropZone);
+        const img = document.querySelector('#dropzone-img');
+        let p = document.querySelector('p')
+        var input = document.getElementById('uploadimg');
+
+        $('#uploadimg').on('change', function (e) {
+            var fileName = URL.createObjectURL(e.target.files[0]);
+            var preview = document.getElementById("drop-zone");
+            var previewImg = document.getElementById("dropzone-img");
+            previewImg.style.display = "block";
+            previewImg.setAttribute("src", fileName);
+            preview.innerHTML = "";
+            preview.appendChild(previewImg);
+            p.style = 'display: none';
+        });
+
+        $('#drop-zone').on('click', function () {
+            input.click();
+        });
+        $('#drop-zone').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        dropZone.addEventListener('drop', (e) => {        
+            e.preventDefault();
+            img.style = "display:block;";
+            let file = e.dataTransfer.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function () {
+                e.preventDefault()
+                p.style = 'display: none';
+                let src = this.result;
+                img.src = src;
+                img.alt = file.name
+            }
+        });
+    </script>
+}

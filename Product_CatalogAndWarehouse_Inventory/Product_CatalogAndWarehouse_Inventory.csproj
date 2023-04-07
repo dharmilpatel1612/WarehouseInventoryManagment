@@ -135,12 +135,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ProductCatalogueController.cs" />
     <Compile Include="Controllers\SKUMappingController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Dal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductCatalogue.cs" />
     <Compile Include="Models\SKUMapping.cs" />
     <Compile Include="Models\UserManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +151,7 @@
     <Content Include="Admin_Template\css\animate.css" />
     <Content Include="Admin_Template\css\bootstrap.css" />
     <Content Include="Admin_Template\css\bootstrap.min.css" />
+    <Content Include="Admin_Template\css\ImageStyle.css" />
     <Content Include="Admin_Template\css\patterns\1.png" />
     <Content Include="Admin_Template\css\patterns\2.png" />
     <Content Include="Admin_Template\css\patterns\3.png" />
@@ -1662,6 +1665,7 @@
     <Content Include="Views\UserManagement\Registration.cshtml" />
     <Content Include="Views\SKUMapping\SKUMapping.cshtml" />
     <Content Include="Views\SKUMapping\GetMappingSku.cshtml" />
+    <Content Include="Views\ProductCatalogue\AddCatalogueProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

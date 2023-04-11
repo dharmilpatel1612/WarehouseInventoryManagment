@@ -31,8 +31,8 @@ namespace Product_CatalogAndWarehouse_Inventory
                     "~/Admin_Template/css/plugins/dataTables/datatables.min.css",
                     "~/Admin_Template/css/animate.css",                   
                     "~/Admin_Template/css/plugins/jasny/jasny-bootstrap.min.css",                   
-                    "~/Admin_Template/css/style.css",
-                    "~/Admin_Template/css/ImageStyle.css"));
+                    "~/Admin_Template/css/style.css"
+                   /* "~/Admin_Template/css/ImageStyle.css"*/));
 
             // Mainly scripts Custom and plugin javascript
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

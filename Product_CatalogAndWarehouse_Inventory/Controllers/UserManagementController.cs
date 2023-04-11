@@ -265,7 +265,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             obj_dal = new Dal();
             sb = new StringBuilder();
             sb.Append("SELECT count(*) FROM tbl_Registration where Email='" + userModel.Email + "' AND Password ='" + userModel.Password + "'");
-            //sb.Append("AND Name='" + userModel.Name + "'");
             int Count = Convert.ToInt32(obj_dal.Get_SingleValue(sb.ToString()));
             if (Count == 1)
             {
@@ -274,8 +273,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 string Username = obj_dal.Get_SingleValue(sb.ToString());
                 // To keep username until session remove
                 Session["Username"] = Username;
-                // Success message in green color
-                //TempData["message"] = "Successfully login";
                 return RedirectToAction("UserList");
             }
             else

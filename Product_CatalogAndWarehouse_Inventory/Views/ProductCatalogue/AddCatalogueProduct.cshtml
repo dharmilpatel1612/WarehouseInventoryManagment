@@ -1,14 +1,32 @@
-﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogue
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogueModel
 
 @{
     ViewBag.Title = "Add Catalogue Product";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-dismissable" id="alertDiv">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.Message
+        <a class="alert-link" href="#"></a>
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissable" id="alertDiv">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.ErrorMessage
+        <a class="alert-link" href="#"></a>
+    </div>
 }
 
 <div class="panel panel-info">
     <div class="panel-heading">
         Add Catalogue Product
     </div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="panel-body">
             <div class="col-lg-4">
                 <div class="panel panel-default">
@@ -16,6 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Product Name:</label>
+                                @*@Html.TextBox("Name", "", new { @class = "form-control" })*@
                                 @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.ProductName, "", new { @style = "color:red" })
                             </div>
@@ -23,6 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Warehouse SKU:</label>
+                                @*@Html.TextBox("SKU", "", new { @class = "form-control" })*@
                                 @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.WarehouseSKU, "", new { @style = "color:red" })
                             </div>
@@ -30,7 +50,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description:</label>
-                                <textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+                                @Html.TextAreaFor(m=>m.Description, new { @class = "form-control" ,placeholder = "Enter a message ..." })
+                                @*<textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>*@
                             </div>
 
                             <div class="form-group">
@@ -45,53 +66,53 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Width (CM):</label>
-                                @Html.TextBox("Width", "", new { @class = "form-control" })
+                                @Html.TextBox("width", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Length (CM):</label>
-                                @Html.TextBox("Length", "", new { @class = "form-control" })
+                                @Html.TextBox("length", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Height (CM):</label>
-                                @Html.TextBox("Height", "", new { @class = "form-control" })
+                                @Html.TextBox("height", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Material Composition:</label>
-                                @Html.TextBox("MaterialComposition", "", new { @class = "form-control" })
+                                @Html.TextBox("materialComposition", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Varsany Bag:</label>
-                                @Html.TextBox("VarsanyBag", "", new { @class = "form-control" })
+                                @Html.TextBox("varsanyBag", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Colour:</label>
-                                @Html.TextBox("Colour", "", new { @class = "form-control" })
+                                @Html.TextBox("colour", "", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Product Weight (KG):</label>
-                                @Html.TextBox("ProductWeight", "", new { @class = "form-control" })
+                                @Html.TextBox("productWeight", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Box Size (CM):</label>
-                                @Html.TextBox("BoxSize", "", new { @class = "form-control" })
+                                @Html.TextBox("boxSize", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Box Quantity:</label>
-                                @Html.TextBox("BoxQuantity", "", new { @class = "form-control" })
+                                @Html.TextBox("boxQuantity", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
-                                <label>Manufacturer:</label>
-                                @Html.TextBox("Manufacturer", "", new { @class = "form-control" })
+                                <label>Manufaturer:</label>
+                                @Html.TextBoxFor(m=>m.Manufaturer, "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Mailing Bag:</label>
-                                @Html.TextBox("MailingBag", "", new { @class = "form-control" })
+                                @Html.TextBox("mailingBag", "", new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Size:</label>
-                                @Html.TextBox("Size", "", new { @class = "form-control" })
+                                @Html.TextBox("size", "", new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -108,6 +129,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Product Cost:</label>
+                                    @*@Html.TextBox("cost", "", new { @class = "form-control" })*@
                                     @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
                                 </div>
@@ -115,7 +137,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Commision (%):</label>
-                                    @Html.TextBox("Commision", "", new { @class = "form-control" })
+                                    @Html.TextBox("commision", "", new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -123,13 +145,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Shipping Cost f/CN:</label>
-                                    @Html.TextBox("ShippingCost", "", new { @class = "form-control" })
+                                    @Html.TextBox("shippingCost", "", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Duty (%):</label>
-                                    @Html.TextBox("Duty", "", new { @class = "form-control" })
+                                    @Html.TextBox("duty", "", new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -168,19 +190,21 @@
                         <div class="ibox-content">
                             <div class="form-group">
                                 <small>IMAGE FORMAT MUST BE JPG,PNG.</small>
-                                <div id="drop-zone">
-                                    <img src="" alt="" id="dropzone-img">
+                                <div id="dropzone">
+                                    <img src="" alt="" id="dropzoneimg">
                                     <p>Drop image or click to upload</p>
-                                    <input type="file" id="uploadimg" hidden />
+                                    <input type="file" id="uploadimg" name="ImageFile" hidden />
                                 </div>
                             </div>
-                        </div>
+                        </div>                     
                         <div class="form-group" style="margin-left:20px">
+                            @*@Html.ValidationMessageFor(m => m.ImageFile, "", new { @style = "color:red" })
+                            <br />*@
                             <a href=""><i class="fa fa-trash" style="color:red;">Delete Attachment</i></a>
                         </div>
                         <div class="form-group" style="margin-left:20px">
-                            <button class="btn btn-white" type="button" data-dismiss="">Cancel</button>
-                            <button class="btn btn-w-m btn-primary" type="submit">Save Product</button>
+                            <button class="btn btn-white" type="button">Cancel</button>
+                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage" onclick="uploadFile()">Save Product</button>
                         </div>
                     </div>
                 </div>
@@ -189,48 +213,76 @@
     </form>
 </div>
 
+<style>
+    #dropzone {
+        max-width: 320px;
+        height: 320px;
+        border: solid 1px #CCC;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #dropzoneimg {
+        object-fit: contain;
+        width: 100%;
+        height: 320px;
+        display: none;
+        padding: 4px;
+    }
+
+    #uploadimg {
+        display: none;
+    }
+</style>
+
 @section scripts{
     <script>
-        const dropZone = document.querySelector('#drop-zone');
-        console.log(dropZone);
-        const img = document.querySelector('#dropzone-img');
+        const dropZone = document.querySelector('#dropzone');
+        const img = document.querySelector('#dropzoneimg');
         let p = document.querySelector('p')
         var input = document.getElementById('uploadimg');
+        var drag = document.getElementById('dropzone');
+        console.log(img);
 
         $('#uploadimg').on('change', function (e) {
             var fileName = URL.createObjectURL(e.target.files[0]);
-            var preview = document.getElementById("drop-zone");
-            var previewImg = document.getElementById("dropzone-img");
+            var previewImg = document.getElementById("dropzoneimg");
             previewImg.style.display = "block";
             previewImg.setAttribute("src", fileName);
-            preview.innerHTML = "";
-            preview.appendChild(previewImg);
             p.style = 'display: none';
         });
 
-        $('#drop-zone').on('click', function () {
+        $('#dropzone').on('click', function () {
             input.click();
         });
-        $('#drop-zone').on('click', function (e) {
+        $('#dropzone').on('click', function (e) {
             e.stopPropagation();
         });
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
         });
-        dropZone.addEventListener('drop', (e) => {        
+        dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
+            
             img.style = "display:block;";
-            let file = e.dataTransfer.files[0];
+            let fileName = e.dataTransfer.files[0];
             const reader = new FileReader();
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(fileName);
             reader.onloadend = function () {
                 e.preventDefault()
                 p.style = 'display: none';
                 let src = this.result;
                 img.src = src;
-                img.alt = file.name
-            }
+                img.alt = fileName.name
+            }  
+            $("#uploadimg").prop("files", e.dataTransfer.files)            
         });
+
+        var milliseconds = 3000;
+        setTimeout(function () {
+            document.getElementById('alertDiv').remove();
+        }, milliseconds);
     </script>
 }

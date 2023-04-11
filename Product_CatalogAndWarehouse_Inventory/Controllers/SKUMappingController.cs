@@ -114,8 +114,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         {
             try
             {
-                /* if extensions are .xls and .xlsx then call importFile()
-                otherwise return view */
+                /* if extensions are not .xls and .xlsx then return view */
                 string extention = Path.GetExtension(sKUMapping.fileupload.FileName);
                 if (extention != ".xls" & extention != ".xlsx")
                 {

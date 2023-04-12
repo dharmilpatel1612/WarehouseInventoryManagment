@@ -2,6 +2,24 @@
 @{
     ViewBag.Title = "CatalogueProduct";
 }
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.ErrorMessage
+
+    </div>
+
+}
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.Message
+
+    </div>
+
+}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -9,7 +27,7 @@
                 <div class="panel-heading">
                     Add Catalogue Product
                 </div>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="panel-body">
                         <div class="col-lg-4">
                             <div class="panel panel-default">
@@ -32,12 +50,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Description:</label>
-                                            <textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+                                            @Html.TextArea("description", "", new { @class = "form-control", placeholder = "Enter a message ..." })
+                                            @*<textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>*@
                                         </div>
 
                                         <div class="form-group">
                                             <label>HS Code:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("hscode", "", new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="form-group" style="text-align:center">
@@ -47,53 +66,53 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Width (CM):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("width", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Length (CM):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                            @Html.TextBox("length", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Height (CM):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                            @Html.TextBox("height", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>MaterialComposition:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                            @Html.TextBox("materialComposition", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Varsany Bag:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                            @Html.TextBox("varsanyBag", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Colour:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("colour", "", new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ProductWeight(KG):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("productWeight", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Box Size (CM):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("boxSize", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Box Quantity:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("boxQuantity", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Manufacturer:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("manufacturer", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Mailing Bag:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("maillingBag", "", new { @class = "form-control" })
                                         </div>
                                         <div class="form-group">
                                             <label>Size:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @Html.TextBox("Size", "", new { @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
@@ -118,54 +137,54 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Commision (%):</label>
-                                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                                @Html.TextBox("commision", "", new { @class = "form-control" })
 
                                                 @*@Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })*@
                                             </div>
-                                            </div>
-
                                         </div>
+
+                                    </div>
                                     <div class="col-lg-12">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ShippingCostf/CN:</label>
-                                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                                @Html.TextBox("shippingncost", "", new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Duty (%):</label>
-                                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
-                                            </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <label>Total Cost</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Chinese Yuan</label>
-                                                    @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>US Dollar</label>
-                                                    @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Euros</label>
-                                                    @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Total Cost</label>
-                                                    @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                                </div>
+                                                @Html.TextBox("duty", "", new { @class = "form-control" })
                                             </div>
                                         </div>
 
                                     </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12" style="text-align:center">
+                                            <label>Total Cost</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Chinese Yuan</label>
+                                                @Html.TextBoxFor(m => m.ChineseYuan, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>US Dollar</label>
+                                                @Html.TextBoxFor(m => m.USDollar, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Euros</label>
+                                                @Html.TextBoxFor(m => m.Euros, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total Cost</label>
+                                                @Html.TextBoxFor(m => m.TotalCost, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
+                            </div>
                         </div>
 
 
@@ -183,11 +202,16 @@
 
                                             <img src="" alt="" id="dropzone-img">
                                             <p>Drop file or click to upload</p>
-                                            <input type="file" id="upload-img" hidden />
+                                            @*<input type="file" id="upload-img" name="Imageupload" hidden />*@
+                                            @Html.TextBoxFor(m => m.ProductImage, "", new { type = "file", id = "upload-img" })
 
                                         </div>
 
+
+
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.ProductImage, "", new { @style = "color:red" })
+
                                     <div class="panel-body">
                                         <div class="infont row-col-md-6">
                                             <a href=""><i class="fa fa-trash" style="color: red;padding-top:15px;">Delete Attachment</i> </a>
@@ -281,6 +305,7 @@
                 img.src = src;
                 img.alt = file.name
             }
+            $("#upload-img").prop("files", e.dataTransfer.files) 
         });
     </script>
 }

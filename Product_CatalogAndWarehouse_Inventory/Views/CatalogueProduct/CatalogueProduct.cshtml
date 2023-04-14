@@ -56,7 +56,8 @@
 
                                         <div class="form-group">
                                             <label>HS Code:</label>
-                                            @Html.TextBox("hscode", "", new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.HSCode, "", new { @style = "color:red" })
                                         </div>
                                     </div>
                                     <div class="form-group" style="text-align:center">
@@ -66,15 +67,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Width (CM):</label>
-                                            @Html.TextBox("width", "", new { @class = "form-control" })
+                                            @Html.TextBox("width", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.Width, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>Length (CM):</label>
-                                            @Html.TextBox("length", "", new { @class = "form-control" })
+                                            @Html.TextBox("length", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.Length, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>Height (CM):</label>
-                                            @Html.TextBox("height", "", new { @class = "form-control" })
+                                            @Html.TextBox("height", "", new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.Height, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>MaterialComposition:</label>
@@ -92,15 +96,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ProductWeight(KG):</label>
-                                            @Html.TextBox("productWeight", "", new { @class = "form-control" })
+                                            @Html.TextBox("productWeight","", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.ProductWeight, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>Box Size (CM):</label>
-                                            @Html.TextBox("boxSize", "", new { @class = "form-control" })
+                                            @Html.TextBox("boxSize", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.BoxSize, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>Box Quantity:</label>
-                                            @Html.TextBox("boxQuantity", "", new { @class = "form-control" })
+                                            @Html.TextBox("boxQuantity", "", new { @class = "form-control" , onkeypress = "return isNumberintKey(event,this)" })
+                                            @*@Html.ValidationMessageFor(m => m.BoxQuantity, "", new { @style = "color:red" })*@
                                         </div>
                                         <div class="form-group">
                                             <label>Manufacturer:</label>
@@ -130,14 +137,14 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Product Cost:</label>
-                                                @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control" })
+                                                @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control", id = "product_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
                                                 @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Commision (%):</label>
-                                                @Html.TextBox("commision", "", new { @class = "form-control" })
+                                                @Html.TextBox("commision", "", new { @class = "form-control", id = "commision", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
 
                                                 @*@Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })*@
                                             </div>
@@ -148,13 +155,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ShippingCostf/CN:</label>
-                                                @Html.TextBox("shippingncost", "", new { @class = "form-control" })
+                                                @Html.TextBox("shippingncost", "", new { @class = "form-control", id = "shipping_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Duty (%):</label>
-                                                @Html.TextBox("duty", "", new { @class = "form-control" })
+                                                @Html.TextBox("duty", "", new { @class = "form-control", id = "duty", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
                                             </div>
                                         </div>
 
@@ -163,27 +170,29 @@
                                         <div class="col-md-12" style="text-align:center">
                                             <label>Total Cost</label>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Chinese Yuan</label>
-                                                @Html.TextBoxFor(m => m.ChineseYuan, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
+                                        <div class="col-lg-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Chinese Yuan</label>
+                                                    @Html.TextBox("chineseYuan", "", new { @class = "form-control", id = "chineseYuan", @readonly = true, placeholder="0.00"})
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>US Dollar</label>
+                                                    @Html.TextBox("uSDollar", "", new { @class = "form-control", id = "usdollar", @readonly = true ,placeholder = "0.00" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Euros</label>
+                                                    @Html.TextBox("euros", "", new { @class = "form-control", id = "euros", @readonly = true , placeholder = "0.00" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Total Cost</label>
+                                                    @Html.TextBox("totalCost", "", new { @class = "form-control", id = "totalcost", @readonly = true,placeholder="0.00"})
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>US Dollar</label>
-                                                @Html.TextBoxFor(m => m.USDollar, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Euros</label>
-                                                @Html.TextBoxFor(m => m.Euros, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Total Cost</label>
-                                                @Html.TextBoxFor(m => m.TotalCost, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                    </div>
                             </div>
                         </div>
 
@@ -218,7 +227,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <button class="btn btn-default" type="button">Cancel</button>
+                                        <button class="btn btn-default" value="Cancel" type="button">Cancel</button>
                                         <button class="btn btn-primary" type="submit">Save Product</button>
                                     </div>
                                 </div>
@@ -256,12 +265,69 @@
 </style>
 @section Scripts{
     <script>
+        function Costsection() {
+
+            const ProductCost = document.getElementById("product_cost").value;
+            const Commision = document.getElementById("commision").value;
+            const Duty = document.getElementById("duty").value;
+            const ShippingCost = document.getElementById("shipping_cost").value;
+
+            const Commision_convert = (ProductCost * Commision) / 100;
+            const Duty_convert = (ProductCost * Duty) / 100;
+            const ShippingCost_convert = (ProductCost * ShippingCost) / 100;
+
+            if (ProductCost > 0 & !isNaN(Commision_convert) & !isNaN(Duty) & !isNaN(ShippingCost)/* & !Commision_convert.match(regexp)*/) {
+                const ChineseYuan = 8.536;
+                const USDollar = 1.241;
+                const Euros = 1.139;
+                const TotalProduct = parseFloat(ProductCost) + parseFloat(Commision_convert);
+                const TotalProductCost = parseFloat(TotalProduct + ShippingCost_convert + Duty_convert).toFixed(2);
+                document.getElementById("chineseYuan").value = (TotalProductCost * ChineseYuan).toFixed(2);
+                document.getElementById("usdollar").value = (TotalProductCost * USDollar).toFixed(2);
+                document.getElementById("euros").value = (TotalProductCost * Euros).toFixed(2);
+                document.getElementById("totalcost").value = TotalProductCost;
+                console.log(TotalProductCost);
+            }
+            else {
+                document.getElementById("chineseYuan").value = "0.00";
+                document.getElementById("usdollar").value = "0.00";
+                document.getElementById("euros").value = "0.00";
+                document.getElementById("totalcost").value = "0.00";
+            }
+
+        }
+       
+        function isNumberKey(evt, obj) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf(".") != -1;
+            if ((value.length == 0) && (event.keyCode == 46)) return false; // checking that length ==0 than not allow to enter '.'
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function isNumberintKey(evt, obj) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf != -1;
+            if ((value.length == 0) && (event.keyCode == 46)) return false; // checking that length ==0 than not allow to enter '.'
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
         const dropZone = document.querySelector('#drop-zone');
         const inputElement = document.getElementById('upload-img');
         const img = document.querySelector('#dropzone-img');
         let p = document.querySelector('p')
-
-        /*"use strict";*/
+        
         dropZone.addEventListener('change', (e) => {
             console.log(event)
             var fileName = URL.createObjectURL(event.target.files[0]);
@@ -275,11 +341,9 @@
         function dragNdrop(event) {
             console.log(event)
             var fileName = URL.createObjectURL(event.target.files[0]);
-
             var previewImg = document.getElementById("dropzone-img");
             previewImg.style.display = "block";
             previewImg.setAttribute("src", fileName);
-
             p.style = 'display: none';
         }
 
@@ -305,7 +369,7 @@
                 img.src = src;
                 img.alt = file.name
             }
-            $("#upload-img").prop("files", e.dataTransfer.files) 
+            $("#upload-img").prop("files", e.dataTransfer.files)
         });
     </script>
 }

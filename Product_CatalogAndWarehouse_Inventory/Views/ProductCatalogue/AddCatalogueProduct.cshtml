@@ -1,7 +1,7 @@
 ﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogueModel
 
 @{
-    ViewBag.Title = "Add Catalogue Product";
+        ViewBag.Title = "Add Catalogue Product";
 }
 
 @if (ViewBag.Message != null)
@@ -24,7 +24,15 @@
 
 <div class="panel panel-info">
     <div class="panel-heading">
-        Add Catalogue Product
+        @if (ViewBag.ProductName != null)
+        {
+            <sapn>Update Catalogue Product | @ViewBag.ProductName</sapn>
+        }
+        else
+        {
+            @ViewBag.Title
+        }
+
     </div>
     <form method="post" enctype="multipart/form-data" id="myForm">
         <div class="panel-body">
@@ -40,7 +48,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Warehouse SKU:</label>                              
+                                <label>Warehouse SKU:</label>
                                 @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.WarehouseSKU, "", new { @style = "color:red" })
                             </div>
@@ -48,12 +56,12 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description:</label>
-                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter a message ..." })                              
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter a message ..." })
                             </div>
 
                             <div class="form-group">
-                                <label>HS Code:</label>
-                                @Html.TextBox("hscode", "", new { @class = "form-control" })
+                                <label>HS Code:</label>                                
+                                @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group" style="text-align:center">
@@ -63,41 +71,41 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Width (CM):</label>
-                                @Html.TextBox("width", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })                              
+                                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Length (CM):</label>
-                                @Html.TextBox("length", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })                               
+                                @Html.TextBoxFor(m => m.Length, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Height (CM):</label>
-                                @Html.TextBox("height", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })                         
+                                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Material Composition:</label>
-                                @Html.TextBox("materialComposition", "", new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.MaterialComposition, new { @class = "form-control" })                               
                             </div>
                             <div class="form-group">
                                 <label>Varsany Bag:</label>
-                                @Html.TextBox("varsanyBag", "", new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.VarsanyBag, new { @class = "form-control" })                                
                             </div>
                             <div class="form-group">
                                 <label>Colour:</label>
-                                @Html.TextBox("colour", "", new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.Colour, new { @class = "form-control" })                               
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Product Weight (KG):</label>
-                                @Html.TextBox("productweight", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })                            
+                                @Html.TextBoxFor(m => m.ProductWeight, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })                                
                             </div>
                             <div class="form-group">
                                 <label>Box Size (CM):</label>
-                                @Html.TextBox("boxsize", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })                     
+                                @Html.TextBoxFor(m => m.BoxSize, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })                              
                             </div>
                             <div class="form-group">
                                 <label>Box Quantity:</label>
-                                @Html.TextBox("boxquantity", "", new { @class = "form-control", oninput = "totalcost()", onkeypress = "return isNumberKeyDot(event,this)" })                                
+                                @Html.TextBoxFor(m => m.BoxQuantity, new { @class = "form-control", onkeypress = "return isNumberKeyDot(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Manufaturer:</label>
@@ -105,11 +113,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Mailing Bag:</label>
-                                @Html.TextBox("mailingBag", "", new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.MailingBag, new { @class = "form-control" })                               
                             </div>
                             <div class="form-group">
                                 <label>Size:</label>
-                                @Html.TextBox("size", "", new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })                              
                             </div>
                         </div>
                     </div>
@@ -134,7 +142,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Commision (%):</label>
-                                    @Html.TextBox("commision", "", new { @class = "form-control", id = "commisions", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
+                                    @Html.TextBoxFor(m => m.Commision, new { @class = "form-control", id = "commisions", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
                                 </div>
                             </div>
                         </div>
@@ -142,13 +150,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Shipping Cost f/CN:</label>
-                                    @Html.TextBox("shippingCost", "", new { @class = "form-control", id = "shippingcost", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
+                                    @Html.TextBoxFor(m => m.ShippingCost, new { @class = "form-control", id = "shippingcost", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Duty (%):</label>
-                                    @Html.TextBox("duty", "", new { @class = "form-control", id = "duty", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
+                                    @Html.TextBoxFor(m => m.Duty, new { @class = "form-control", id = "duty", oninput = "totalcost()", onkeypress = "return isNumberKey(event,this)" })
                                 </div>
                             </div>
                         </div>
@@ -188,18 +196,32 @@
                             <div class="form-group">
                                 <small>IMAGE FORMAT MUST BE JPG,PNG.</small>
                                 <div id="dropzone">
-                                    <img src="" alt="" id="dropzoneimg">
-                                    <p>Drop image or click to upload</p>
+                                    @if (ViewBag.ImageUrl != null & ViewBag.ImageUrl != "")
+                                    {
+                                        <img src="/UploadedImage/@ViewBag.ImageUrl" id="dropzoneimg" alt="">
+                                        <p></p>
+                                    }
+                                    else
+                                    {
+                                        <img src="" alt="" id="dropzoneimg" style="display:none">
+                                        <p>Drop image or click to upload</p>
+                                    }
                                     <input type="file" id="uploadimg" name="ImageFile" hidden />
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-left:20px">                          
-                            <a href=""><i class="fa fa-trash" style="color:red;">Delete Attachment</i></a>
+                        <div class="form-group" style="margin-left:20px">                           
+                            @if (@ViewBag.ImageUrl != null & ViewBag.ImageUrl != "")
+                            {
+                                <a onclick="DeleteImage()" ><i class="fa fa-trash" style="color: red;">Delete Attachment</i></a>
+                            }
+                            else { 
+                                <a style="cursor:not-allowed"><i class="fa fa-trash" style="color: red;">Delete Attachment</i></a>
+                            }
                         </div>
                         <div class="form-group" style="margin-left:20px">
                             <button class="btn btn-white" type="button">Cancel</button>
-                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">Save Product</button>
+                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">@TempData["Message"]</button>
                         </div>
                     </div>
                 </div>
@@ -222,7 +244,6 @@
         object-fit: contain;
         width: 100%;
         height: 320px;
-        display: none;
         padding: 4px;
     }
 
@@ -233,13 +254,13 @@
 
 @section scripts{
     <script>
+        window.onload = totalcost();
 
         function totalcost() {
             const productcost = document.getElementById('productcost').value;
             const commission_val = document.getElementById('commisions').value;
             const shipping_cost_val = document.getElementById('shippingcost').value;
             const duty_val = document.getElementById('duty').value;
-
 
             if (productcost > 0 && !isNaN(commission_val) && !isNaN(shipping_cost_val) && !isNaN(duty_val)) {
                 const commission = (productcost * commission_val) / 100;
@@ -282,7 +303,7 @@
             var charCode = (evt.which) ? evt.which : evt.keyCode
             var value = obj.value;
             var dotcontains = value.indexOf("") != -1;
-            if ((value.length == 0) && (evt.keyCode == 46)) return false; 
+            if ((value.length == 0) && (evt.keyCode == 46)) return false;
             if (dotcontains)
                 if (charCode == 46) return false;
             if (charCode == 46) return true;
@@ -290,7 +311,7 @@
                 return false;
             return true;
         }
-  
+
         const dropZone = document.querySelector('#dropzone');
         const img = document.querySelector('#dropzoneimg');
         let p = document.querySelector('p')
@@ -332,11 +353,16 @@
             $("#uploadimg").prop("files", e.dataTransfer.files)
         });
 
+        function DeleteImage() {
+            var image = document.getElementById("dropzoneimg").style.display = 'none';
+            console.log(image)
+        }
+
         $(document).ready(function () {
             // alert box timeout for 3 sec
             setTimeout(function () {
                 $('.alert').fadeOut('slow');
-            }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+            }, 30000); // <-- time in milliseconds, 1000 =  1 sec
         });
 
     </script>

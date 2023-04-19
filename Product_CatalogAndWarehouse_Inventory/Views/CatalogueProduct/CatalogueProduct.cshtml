@@ -20,251 +20,249 @@
     </div>
 
 }
+
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    Add Catalogue Product
+
+                    @ViewBag.Message1
                 </div>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="panel-body">
-                        <div class="col-lg-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body" style="min-height:820px">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Product Name:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.ProductName, "", new { @style = "color:red" })
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="panel-body">
+                            <div class="col-lg-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body" style="min-height:820px">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Product Name:</label>
+                                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.ProductName, "", new { @style = "color:red" })
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Warehouse SKU:</label>
-                                            @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.WarehouseSKU, "", new { @style = "color:red" })
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Warehouse SKU:</label>
+                                                @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.WarehouseSKU, "", new { @style = "color:red" })
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description:</label>
-                                            @Html.TextArea("description", "", new { @class = "form-control", placeholder = "Enter a message ..." })
-                                            @*<textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>*@
-                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Description:</label>
+                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter a message ..." })
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>HS Code:</label>
-                                            @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.HSCode, "", new { @style = "color:red" })
+                                            <div class="form-group">
+                                                <label>HS Code:</label>
+                                                @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.HSCode, "", new { @style = "color:red" })
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group" style="text-align:center">
-                                        <label>Product Dimensions:</label>
-                                    </div>
-                                    <hr />
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Width (CM):</label>
-                                            @Html.TextBox("width", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.Width, "", new { @style = "color:red" })*@
+                                        <div class="form-group" style="text-align:center">
+                                            <label>Product Dimensions:</label>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Length (CM):</label>
-                                            @Html.TextBox("length", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.Length, "", new { @style = "color:red" })*@
+                                        <hr />
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Width (CM):</label>
+                                                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                                @*@Html.ValidationMessageFor(m => m.Width, "", new { @style = "color:red" })*@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Length (CM):</label>
+                                                @Html.TextBoxFor(m => m.Length, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                                @*@Html.ValidationMessageFor(m => m.Length, "", new { @style = "color:red" })*@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Height (CM):</label>
+                                                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                                @*@Html.ValidationMessageFor(m => m.Height, "", new { @style = "color:red" })*@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>MaterialComposition:</label>
+                                                @Html.TextBoxFor(m => m.MaterialComposition, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Varsany Bag:</label>
+                                                @Html.TextBoxFor(m => m.VarsanyBag, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Colour:</label>
+                                                @Html.TextBoxFor(m => m.Colour, new { @class = "form-control" })
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Height (CM):</label>
-                                            @Html.TextBox("height", "", new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.Height, "", new { @style = "color:red" })*@
-                                        </div>
-                                        <div class="form-group">
-                                            <label>MaterialComposition:</label>
-                                            @Html.TextBox("materialComposition", "", new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Varsany Bag:</label>
-                                            @Html.TextBox("varsanyBag", "", new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Colour:</label>
-                                            @Html.TextBox("colour", "", new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>ProductWeight(KG):</label>
-                                            @Html.TextBox("productWeight","", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.ProductWeight, "", new { @style = "color:red" })*@
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Box Size (CM):</label>
-                                            @Html.TextBox("boxSize", "", new { @class = "form-control" , onkeypress = "return isNumberKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.BoxSize, "", new { @style = "color:red" })*@
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Box Quantity:</label>
-                                            @Html.TextBox("boxQuantity", "", new { @class = "form-control" , onkeypress = "return isNumberintKey(event,this)" })
-                                            @*@Html.ValidationMessageFor(m => m.BoxQuantity, "", new { @style = "color:red" })*@
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Manufacturer:</label>
-                                            @Html.TextBox("manufacturer", "", new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Mailing Bag:</label>
-                                            @Html.TextBox("maillingBag", "", new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Size:</label>
-                                            @Html.TextBox("Size", "", new { @class = "form-control" })
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ProductWeight(KG):</label>
+                                                @Html.TextBoxFor(m => m.ProductWeight, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Box Size (CM):</label>
+                                                @Html.TextBoxFor(m => m.BoxSize, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Box Quantity:</label>
+                                                @Html.TextBoxFor(m => m.BoxQuantity, new { @class = "form-control", onkeypress = "return isNumberintKey(event,this)" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Manufacturer:</label>
+                                                @Html.TextBoxFor(m => m.Manufacturer, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Mailing Bag:</label>
+                                                @Html.TextBoxFor(m => m.MailingBag, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Size:</label>
+                                                @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body" style="min-height:820px">
-                                    <div class="col-lg-12">
-                                        <center><label for="showEasing">Cost</label></center>
-                                        <div class="ibox-content">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Product Cost:</label>
-                                                @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control", id = "product_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
-                                                @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
+                            <div class="col-lg-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body" style="min-height:820px">
+                                        <div class="col-lg-12">
+                                            <center><label for="showEasing">Cost</label></center>
+                                            <div class="ibox-content">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Commision (%):</label>
-                                                @Html.TextBox("commision", "", new { @class = "form-control", id = "commision", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Product Cost:</label>
+                                                    @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control", id = "product_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
+                                                    @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Commision (%):</label>
+                                                    @Html.TextBoxFor(m => m.Commision, new { @class = "form-control", id = "commision", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
+                                                </div>
+                                            </div>
 
-                                                @*@Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })*@
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>ShippingCostf/CN:</label>
-                                                @Html.TextBox("shippingncost", "", new { @class = "form-control", id = "shipping_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Duty (%):</label>
-                                                @Html.TextBox("duty", "", new { @class = "form-control", id = "duty", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12" style="text-align:center">
-                                            <label>Total Cost</label>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Chinese Yuan</label>
-                                                    @Html.TextBox("chineseYuan", "", new { @class = "form-control", id = "chineseYuan", @readonly = true, placeholder="0.00"})
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>US Dollar</label>
-                                                    @Html.TextBox("uSDollar", "", new { @class = "form-control", id = "usdollar", @readonly = true ,placeholder = "0.00" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Euros</label>
-                                                    @Html.TextBox("euros", "", new { @class = "form-control", id = "euros", @readonly = true , placeholder = "0.00" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Total Cost</label>
-                                                    @Html.TextBox("totalCost", "", new { @class = "form-control", id = "totalcost", @readonly = true,placeholder="0.00"})
+                                                    <label>ShippingCostf/CN:</label>
+                                                    @Html.TextBoxFor(m => m.Shippingcost, new { @class = "form-control", id = "shipping_cost", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Duty (%):</label>
+                                                    @Html.TextBoxFor(m => m.Duty, new { @class = "form-control", id = "duty", oninput = "Costsection()", onkeypress = "return isNumberKey(event,this)" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <label>Total Cost</label>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Chinese Yuan</label>
+                                                        @Html.TextBoxFor(m => m.ChineseYuan, new { @class = "form-control", id = "chineseYuan", @readonly = true, placeholder = "0.00" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>US Dollar</label>
+                                                        @Html.TextBoxFor(m => m.USDollar, new { @class = "form-control", id = "usdollar", @readonly = true, placeholder = "0.00" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Euros</label>
+                                                        @Html.TextBoxFor(m => m.Euros, new { @class = "form-control", id = "euros", @readonly = true, placeholder = "0.00" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Total Cost</label>
+                                                        @Html.TextBoxFor(m => m.TotalCost, new { @class = "form-control", id = "totalcost", @readonly = true, placeholder = "0.00" })
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                     </div>
+                                </div>
                             </div>
-                        </div>
-
-
-                        <div class="col-lg-4">
-                            <div class="panel panel-default" style="min-height:820px">
-
-                                <div class="panel-body">
-                                    <div class="col-lg-12">
-                                        <label for="showEasing">Product Image</label>
-                                        <div class="ibox-content">
-                                        </div>
-                                        <h5 style="color:grey">IMAGE FORMAT MUST BE JPG,PNG</h5>
-                                        <div id="drop-zone" onclick="inputClick(event)">
-
-
-                                            <img src="" alt="" id="dropzone-img">
-                                            <p>Drop file or click to upload</p>
-                                            @*<input type="file" id="upload-img" name="Imageupload" hidden />*@
-                                            @Html.TextBoxFor(m => m.ProductImage, "", new { type = "file", id = "upload-img" })
-
-                                        </div>
-
-
-
-                                    </div>
-                                    @Html.ValidationMessageFor(m => m.ProductImage, "", new { @style = "color:red" })
+                            <div class="col-lg-4">
+                                <div class="panel panel-default" style="min-height:820px">
 
                                     <div class="panel-body">
-                                        <div class="infont row-col-md-6">
-                                            <a href=""><i class="fa fa-trash" style="color: red;padding-top:15px;">Delete Attachment</i> </a>
+                                        <div class="col-lg-12">
+                                            <label for="showEasing">Product Image</label>
+                                            <div class="ibox-content">
+                                            </div>
+                                            <h5 style="color:grey">IMAGE FORMAT MUST BE JPG,PNG</h5>
+                                            <div id="drop-zone" onclick="inputClick(event)">
+                                                @if (ViewBag.imageurl != null)
+                                                {
+
+                                                    <img src="/Uploads/@ViewBag.imageurl" alt="" id="dropzone-img" />
+                                                    <p></p>
+                                                }
+                                                else
+                                                {
+                                                    <img src="" alt="" id="dropzone-img" style="display:none">
+                                                    <p>Drop file or click to upload</p>
+                                                }
+                                                @Html.TextBoxFor(m => m.ProductImage, "", new { type = "file", id = "upload-img" })
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-default" value="Cancel" type="button">Cancel</button>
-                                        <button class="btn btn-primary" type="submit">Save Product</button>
+
+                                        @*@Html.ValidationMessageFor(m => m.image, "", new { @style = "color:red" })*@
+                                        <div class="panel-body">
+                                            <div class="infont row-col-md-6">
+                                                <a href=""><i class="fa fa-trash" style="color: red;padding-top:15px;">Delete Attachment</i> </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-default" value="Cancel" type="button">Cancel</button>
+                                            <button class="btn btn-primary" type="submit">@TempData["Message"]</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+
+                    </form>
             </div>
-
         </div>
-
     </div>
 </div>
 <style>
-    #drop-zone {
-        max-width: 300px;
-        height: 300px;
-        border: solid 1px #CCC;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        #drop-zone {
+            max-width: 300px;
+            height: 300px;
+            border: solid 1px #CCC;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    #dropzone-img {
-        object-fit: contain;
-        width: 100%;
-        height: 300px;
-        display: none;
-        padding: 4px;
-    }
+        #dropzone-img {
+            object-fit: contain;
+            width: 100%;
+            height: 300px;
+            /*        display: none;
+    */ padding: 4px;
+        }
 
-    #upload-img {
-        display: none;
-    }
+        #upload-img {
+            display: none;
+        }
 </style>
 @section Scripts{
     <script>
+        window.onload = Costsection();
         function Costsection() {
 
             const ProductCost = document.getElementById("product_cost").value;
@@ -296,7 +294,7 @@
             }
 
         }
-       
+
         function isNumberKey(evt, obj) {
             var charCode = (evt.which) ? evt.which : evt.keyCode
             var value = obj.value;
@@ -327,7 +325,7 @@
         const inputElement = document.getElementById('upload-img');
         const img = document.querySelector('#dropzone-img');
         let p = document.querySelector('p')
-        
+
         dropZone.addEventListener('change', (e) => {
             console.log(event)
             var fileName = URL.createObjectURL(event.target.files[0]);
@@ -370,6 +368,9 @@
                 img.alt = file.name
             }
             $("#upload-img").prop("files", e.dataTransfer.files)
+            onload.ChineseYuan;
+            onload.USDollar;
+            onload.Euros;
         });
     </script>
 }

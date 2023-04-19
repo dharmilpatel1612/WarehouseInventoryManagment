@@ -31,29 +31,30 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         public string WarehouseSKU { get; set; }
         public string Description { get; set; }
         public string HSCode { get; set; }
-        public decimal Width { get; set; }
-        public decimal Length { get; set; }
-        public decimal Height { get; set; }
+        public decimal? Width { get; set; }
+        public decimal? Length { get; set; }
+        public decimal? Height { get; set; }
         public string MaterialComposition { get; set; }
         public string VarsanyBag { get; set; }
         public string Colour { get; set; }
-        public decimal ProductWeight { get; set; }
-        public decimal BoxSize { get; set; }
-        public int BoxQuantity { get; set; }
+        public decimal? ProductWeight { get; set; }
+        public decimal? BoxSize { get; set; }
+        public int? BoxQuantity { get; set; }
         public string Manufacturer { get; set; }
-        public string MaillingBag { get; set; }
+        public string MailingBag { get; set; }
         public string Size { get; set; }
         [Required(ErrorMessage = "Required")]
         public decimal ProductCost { get; set; }
-        public decimal Shippingncost { get; set; }
-        public decimal Commision { get; set; }
-        public decimal Duty { get; set; }
+        public decimal? Shippingcost { get; set; }
+        public decimal? Commision { get; set; }
+        public decimal? Duty { get; set; }
         public decimal ChineseYuan { get; set; }
         public decimal USDollar { get; set; }
         public decimal Euros { get; set; }
         public decimal TotalCost { get; set; }
         [FileExtensionValidate]
         public HttpPostedFileBase ProductImage { get; set; }
+        public string image { get; set; }
 
     }
 }

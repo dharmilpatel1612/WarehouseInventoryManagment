@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+﻿using Microsoft.Ajax.Utilities;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Product_CatalogAndWarehouse_Inventory.Models;
 using System;
 using System.Data;
@@ -17,7 +18,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         DataTable dt_product = new DataTable();
 
         // GET: Edit Product Catalogue
-        public ActionResult AddCatalogueProduct(string sku)              
+        public ActionResult AddCatalogueProduct(string sku, string ImagePath)              
         {          
             ProductCatalogueModel productmodel = new ProductCatalogueModel();
             /* If statement is used to check sku is null or not 
@@ -70,11 +71,12 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             ViewBag.Title = "Add Catalogue Product";
             TempData["Message"] = "Save Product";
             return View();
+            
         }
 
         // POST : ADD / Edit Product Catalogue 
         [HttpPost]
-        public ActionResult AddCatalogueProduct(ProductCatalogueModel product,string sku)
+        public ActionResult AddCatalogueProduct(ProductCatalogueModel product,string sku,string ImagePath)
         {
             try
             {
@@ -90,7 +92,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 product.Commision = product.Commision ?? 0;
                 product.ShippingCost = product.ShippingCost ?? 0;
                 product.Duty = product.Duty ?? 0;
-                
+
                 /* If statement is used to check ImageFile is null or not 
                  * if it is not null than save image in UploadedIMage folder.*/
                 if (product.ImageFile != null)
@@ -136,6 +138,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         // Applied Select query for get value of ProductImage
                         sb.Append("SELECT ProductImage FROM tbl_ProductCatalogue where WarehouseSKU = '" + sku + "'");
                         string Image = obj_dal.Get_SingleValue(sb.ToString());
+                        //string UploadImage = "/UploadedImage / " + Image;
                         /*If statement use for delete old image file when update image.
                          *else statement use for pass image file name to database */
                         if (Image != uniqueImagename && uniqueImagename != "")
@@ -148,7 +151,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                             {
                                 file.Delete();
                             }
-                        }
+                        }                      
                         else
                         {
                             uniqueImagename = Image;
@@ -208,6 +211,46 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     ViewBag.ErrorMessage = ex.Message;
             }            
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult RemoveImage(string warehousesku)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                obj_dal = new Dal();
+                string uniqueimage = string.Empty; 
+                if (warehousesku != null)
+                {
+                    // Applied Select query for get value of ProductImage
+                    sb.Append("SELECT ProductImage FROM tbl_ProductCatalogue where WarehouseSKU = '" + warehousesku + "'");
+                    string imageName = obj_dal.Get_SingleValue(sb.ToString());
+                    // If statement use for delete old image file when update image.                        
+                    if (!string.IsNullOrEmpty(imageName))
+                    {
+                        // Set file path with directory
+                        string path = Server.MapPath("~/UploadedImage/" + imageName);
+                        FileInfo file = new FileInfo(path);
+                        //check file exists or not.if file exists then it will delete file 
+                        if (file.Exists)
+                        {
+                            file.Delete();
+                        }
+                    }
+                    sb.Clear();
+                    // Applied UPDATE Query to update Add catelogue product page Image field in database using model
+                    sb.Append("UPDATE tbl_ProductCatalogue SET ProductImage = '"+uniqueimage+ "' WHERE WarehouseSKU = '" + warehousesku + "' ");
+                    obj_dal.EXECUTE_DML(sb.ToString());                   
+                    return Json(new { iserror = false, result = 1, message = "File successfully deleted" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { iserror = true, result = 1, message = "Warehousesku is null" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { iserror = true, result = 1,message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            
         }
     }
 }

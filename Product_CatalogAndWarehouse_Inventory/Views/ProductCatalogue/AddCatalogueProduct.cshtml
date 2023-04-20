@@ -1,8 +1,15 @@
 ﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogueModel
 
 @{
-        ViewBag.Title = "Add Catalogue Product";
+    ViewBag.Title = "Add Catalogue Product";
 }
+
+
+<div class="alert alert-success alert-dismissable" style="display:none" id="successMsg">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    <a class="alert-link" href="#"></a>
+
+</div>
 
 @if (ViewBag.Message != null)
 {
@@ -60,7 +67,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>HS Code:</label>                                
+                                <label>HS Code:</label>
                                 @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control" })
                             </div>
                         </div>
@@ -83,25 +90,25 @@
                             </div>
                             <div class="form-group">
                                 <label>Material Composition:</label>
-                                @Html.TextBoxFor(m => m.MaterialComposition, new { @class = "form-control" })                               
+                                @Html.TextBoxFor(m => m.MaterialComposition, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Varsany Bag:</label>
-                                @Html.TextBoxFor(m => m.VarsanyBag, new { @class = "form-control" })                                
+                                @Html.TextBoxFor(m => m.VarsanyBag, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Colour:</label>
-                                @Html.TextBoxFor(m => m.Colour, new { @class = "form-control" })                               
+                                @Html.TextBoxFor(m => m.Colour, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Product Weight (KG):</label>
-                                @Html.TextBoxFor(m => m.ProductWeight, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })                                
+                                @Html.TextBoxFor(m => m.ProductWeight, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Box Size (CM):</label>
-                                @Html.TextBoxFor(m => m.BoxSize, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })                              
+                                @Html.TextBoxFor(m => m.BoxSize, new { @class = "form-control", onkeypress = "return isNumberKey(event,this)" })
                             </div>
                             <div class="form-group">
                                 <label>Box Quantity:</label>
@@ -113,11 +120,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Mailing Bag:</label>
-                                @Html.TextBoxFor(m => m.MailingBag, new { @class = "form-control" })                               
+                                @Html.TextBoxFor(m => m.MailingBag, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Size:</label>
-                                @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })                              
+                                @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -210,13 +217,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-left:20px">                           
+                        <div class="form-group" style="margin-left:20px" id="deleteimage">
                             @if (@ViewBag.ImageUrl != null & ViewBag.ImageUrl != "")
                             {
-                                <a onclick="DeleteImage()" ><i class="fa fa-trash" style="color: red;">Delete Attachment</i></a>
+                                <a onclick="DeleteImage();" id="Hidedeleteimage">
+                                    <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
+                                </a>                              
                             }
-                            else { 
-                                <a style="cursor:not-allowed"><i class="fa fa-trash" style="color: red;">Delete Attachment</i></a>
+                            else
+                            {
+                                <a style="cursor:not-allowed" id="disablecursor"><i class="fa fa-trash" style="color: red;">Delete Attachment</i></a>
                             }
                         </div>
                         <div class="form-group" style="margin-left:20px">
@@ -354,8 +364,36 @@
         });
 
         function DeleteImage() {
-            var image = document.getElementById("dropzoneimg").style.display = 'none';
-            console.log(image)
+            let warehouseSku = document.getElementById('WarehouseSKU').value;
+            let imageSource = document.querySelector('#dropzoneimg').getAttribute('src')
+            if (!imageSource) {
+                return;
+            }
+
+            let isConfirm = confirm('Are you sure you want to delete this image?')
+            if (isConfirm) {               
+                $.ajax({
+                    url: "RemoveImage",
+                    method: 'GET',
+                    data: { warehousesku: warehouseSku },
+                    success: function (response) {
+                        if (response.iserror == false) {
+                            document.getElementById("dropzoneimg").style.display = 'none';                           
+                            p.textContent = "Drop image or click to upload";
+                            document.getElementById("Hidedeleteimage").style.cursor = "not-allowed";
+                            document.querySelector('#dropzoneimg').src = '';                                                     
+                        }
+                        alert(response.message);                        
+                        document.getElementById('successMsg').innerText = response.message                       
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }          
         }
 
         $(document).ready(function () {

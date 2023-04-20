@@ -101,7 +101,7 @@
         $("#tblmappingSKU").on('click', 'tr', function () {
                 var warehouseSKU = $(this).find("td:nth-child(2)").text().trim();
         
-                $.ajax({
+            $.ajax({
                     url : '@Url.Action("GetMappingSku", "SKUMapping")',
                     method: 'GET',
                     data: { warehouseSKU: warehouseSKU },

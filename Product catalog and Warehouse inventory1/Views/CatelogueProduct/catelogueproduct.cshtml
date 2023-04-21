@@ -2,18 +2,42 @@
 @{
     ViewBag.Title = "Add Catelogue Product";
 }
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.ErrorMessage
 
+    </div>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        @ViewBag.Message
+
+    </div>
+}
+@*<div class="panel panel-info">
+        <div class="pannel-heading">
+            @if (ViewBag.ProductName !=null)
+                {
+                    <span>Update Catelogue Product | @ViewBag.ProductName</span>
+                }
+        </div>
+    </div>*@
 <div class="col-lg-12">
     <div class="panel panel-success">
         <div class="panel-heading">
             Add Catelogue Product
         </div>
-        <div class="ibox-content">
-            <form method="post">
-
+        <form method="post" enctype="multipart/form-data">
+            <div class="ibox-content">
                 <div class="panel-body">
                     <div class="col-lg-4">
-                        <div class="panel panel-default"style="min-height:805px">
+                        <div class="panel panel-default" style="min-height:805px">
                             <div class="panel-body">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -33,12 +57,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Description:</label>
-                                        <textarea class="form-control" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter a message ..." })
                                     </div>
 
                                     <div class="form-group">
                                         <label>HS Code:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.HSCode, "", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.HSCode, "", new { Style = "color:red" })
                                     </div>
                                 </div>
                                 <div class="form-group" style="text-align:center">
@@ -48,58 +73,58 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Width (CM):</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Width, "", new { @class = "form-control" })
                                     </div>
                                     <div class="form-group">
                                         <label>Length (CM):</label>
-                                        @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Length, "", new { @class = "form-control" })
                                     </div>
                                     <div class="form-group">
                                         <label>Height (CM):</label>
-                                        @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Height, "", new { @class = "form-control" })
                                     </div>
                                     <div class="form-group">
                                         <label>MaterialComposition:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.MaterialComposition, "", new { @class = "form-control" })
                                     </div>
                                     <div class="form-group">
                                         <label>Varsany Bag:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.VarsanyBag, "", new { @class = "form-control" })
                                     </div>
                                     <div class="form-group">
                                         <label>Colour:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Colour, "", new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>ProductWeight(KG):</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.ProductWeight, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                     <div class="form-group">
                                         <label>Box Size (CM):</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.BoxSize, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                     <div class="form-group">
                                         <label>Box Quantity:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.BoxQuantity, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                     <div class="form-group">
                                         <label>Manufacturer:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Manufacturer, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                     <div class="form-group">
                                         <label>Mailing Bag:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.MaillingBag, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                     <div class="form-group">
                                         <label>Size:</label>
-                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Size, "", new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>            
+                    </div>
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-body" style="min-height:805px">
@@ -113,59 +138,68 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Product Cost:</label>
-                                            @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control", id = "productCost", oninput = "CalculateTotalCost()" })
                                             @Html.ValidationMessageFor(m => m.ProductCost, "", new { @style = "color:red" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Commision (%):</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @*@Html.TextBoxFor(m => m.Commision, new { @class = "form-control", id = "commision", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(evt, this)" })*@
+                                            @*@Html.ValidationMessageFor(m => m.Commision, "", new { @style = "color:red" })*@
+                                            @Html.TextBoxFor(m => m.Commision, "", new { @class = "form-control", id = "commision", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(event)" })
 
-                                        </div>                                     
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ShippingCostf/CN:</label>
-                                            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                                            @*@Html.TextBoxFor(m => m.Shippingncost, new { @class = "form-control", id = "shippingcost", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(evt, this)" })*@
+                                            @Html.TextBoxFor(m => m.Shippingncost, "", new { @class = "form-control", id = "shipping_cost", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(event)" })
+
+                                            @*@Html.ValidationMessageFor(m => m.Shippingncost, "", new { @style = "color:red" })*@
+
                                         </div>
                                     </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Duty (%):</label>
-                                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Duty (%):</label>
+                                            @*@Html.TextBoxFor(m => m.Duty, new { @class = "form-control", id = "duty", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(evt, this)" })*@
+                                            @Html.TextBoxFor(m => m.Duty, "", new { @class = "form-control", id = "duty", oninput = "CalculateTotalCost()", onkeypress = "return isNumberKey(event)" })
+
+                                            @*@Html.ValidationMessageFor(m => m.Duty, "", new { @style = "color:red" })*@
+
                                         </div>
+                                    </div>
                                 </div>
 
-                               
-                                <div class="col-md-12" >
+
+                                <div class="col-md-12">
                                     <div class="form-group" style="text-align :center">
                                         <label>Total Cost</label>
                                     </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label>Chinese Yuan</label>
-                                                @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>US Dollar</label>
-                                                @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Euros</label>
-                                                @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Total Cost</label>
-                                                @Html.TextBoxFor(m => m.ProductName, "", new { @class = "form-control", @disabled = "true", Value = "0.00" })
-                                            </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Chinese Yuan</label>
+                                            @Html.TextBoxFor(m => m.ChineseYuan, "", new { id = "ChineseYuan", @class = "form-control", @readonly = true, placeholder = "0.00" })
                                         </div>
-                                   
-                                </div>
+                                        <div class="form-group">
+                                            <label>US Dollar</label>
+                                            @Html.TextBoxFor(m => m.USDollar, "", new { id = "UsDollar", @class = "form-control", @readonly = true, placeholder = "0.00" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Euros</label>
+                                            @Html.TextBoxFor(m => m.Euros, "", new { id = "Euros", @class = "form-control", @readonly = true, placeholder = "0.00" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Cost</label>
+                                            @Html.TextBoxFor(m => m.TotalCost, "", new { id = "total", @class = "form-control", @readonly = true, placeholder = "0.00" })
+                                        </div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,41 +210,57 @@
                                 <div class="col-lg-12">
                                     <label for="showEasing">Product Image</label>
                                     <div class="ibox-content">
-                                    </div>
+                                        <div class="form-group">
 
-                                    <h5 style="color:grey">IMAGE FORMAT MUST BE JPG,PNG</h5>
+                                            <h5 style="color:grey">IMAGE FORMAT MUST BE JPG,PNG</h5>
 
-                                    <div id="drop-zone" onclick="inputClick(event)">
+                                            <div id="drop-zone" onclick="inputClick(event)">
+                                                @if (ViewBag.imageurl != null & ViewBag.imageurl != "")
+                                                 {
+                                                    <img src="~/upload image/@ViewBag.imageurl" id="dropzone-img" alt="@ViewBag.imageurl" />
+                                                    <p id="p1" style="display:none">Drop file or click to upload </p>
+                                                 }
 
-                                        <p>Drop file or click to upload</p>
-                                        <img src="" alt="" id="dropzone-img">
-
-                                        <input type="file" id="upload-img" hidden />
+                                                else
+                                                {
+                                                    <img src="" alt="" id="dropzone-img" style="display:none">
+                                                    <p >Drop file or click to upload </p>
+                                                }
+                                                <input type="file" id="upload-img" name="ProductImage" hidden />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="infont row-col-md-6">
-                                        <a href=""><i class="fa fa-trash" style="color: red;padding-top:15px;">Delete Attachment</i> </a>
+                                    <div class="form-group"style="margin-left:20px"id="deleteimage">
+                                        @if (ViewBag.imageurl != null & ViewBag.imageurl != "")
+                                         {
+                                            <a onclick="DeleteImage()" id="delete">
+                                                <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
+                                            </a>
+                                            @*<a onclick="if(confirm('Are you sure you want to delete this image?')) DeleteImage();" id="delete">
+                                                 </a>*@
+                                         }
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <button class="btn btn-default" type="button">Cancel</button>
-                                    <button class="btn btn-primary" type="submit">Save Product</button>
+                                    <button class="btn btn-primary" type="submit">@TempData["Message"]</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 
 <style>
-   
+
     #drop-zone {
-        max-width: 400px;
-        height: 300px;
+        max-width: 450px;
+        height: 350px;
         border: solid 1px #CCC;
         display: flex;
         justify-content: center;
@@ -221,15 +271,103 @@
         object-fit: contain;
         width: 100%;
         height: 300px;
-        display: none;
+        /*display: none;*/
         padding: 4px;
     }
-    #upload-img{
-        display:none;
+
+    #upload-img {
+        display: none;
     }
+
 </style>
 @section Scripts{
     <script>
+        window.onload = CalculateTotalCost();
+        //for cost
+        function CalculateTotalCost() {
+
+            const productCost = document.getElementById('productCost').value
+
+            const commisionPercentage = document.getElementById('commision').value
+            const commisionvalue = (productCost * commisionPercentage) / 100;
+
+            const shippingcostInput = document.getElementById('shipping_cost').value
+            const shippingcost = (productCost * shippingcostInput) / 100;
+
+            const dutyPer = document.getElementById('duty').value
+            const duty = (productCost * dutyPer) / 100;
+
+
+            if (productCost > 0 || commisionvalue > 0 || shippingcost > 0 || duty > 0) {
+                const USDollar = "1.241";
+                const ChineseYuan = "8.536";
+                const Euros = "1.139";
+                const total = parseFloat(productCost) + parseFloat(commisionvalue);
+                const total1 = ((parseFloat(total) + parseFloat(shippingcost)) + parseFloat(duty)).toFixed(2);
+
+                const Usdollar = (parseFloat(total1) * USDollar).toFixed(2);
+                const chineseyuan = (parseFloat(total1) * ChineseYuan).toFixed(2);
+                const euros = (parseFloat(total1) * Euros).toFixed(2);
+
+                document.getElementById("total").value = parseFloat(total1);
+                //document.getElementById("total").innerHTML = total1;
+
+                document.getElementById('UsDollar').value = Usdollar;
+                document.getElementById('ChineseYuan').value = chineseyuan;
+                document.getElementById('Euros').value = euros;
+            }
+            else {
+                document.getElementById('Euros').value = '0.00';
+                document.getElementById('UsDollar').value = '0.00';
+                document.getElementById('ChineseYuan').value = '0.00';
+                document.getElementById('total').value = '0.00';
+                //document.getElementById('commision').value = '0.00';
+
+            }
+
+        }
+
+
+        function isNumberKey(evt, obj) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf(".") != -1;
+            if ((value.length == 0) && (event.keyCode == 46)) return false; // checking that length ==0 than not allow to enter '.'
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function isNumberintKey(evt, obj) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf != -1;
+            if ((value.length == 0) && (event.keyCode == 46)) return false; // checking that length ==0 than not allow to enter '.'
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+        //image
+        $(document).ready(function () {
+            $(".quantity").on('change', function () {
+                var roomNo = $(this).children('option:selected').val();
+                var cost = $(this).parent().parent().find('.charge p').text();
+                var totalRoomCost = roomNo * cost;
+                var oldRoomNo = $('.room_no').val();
+                var numberOfRooms = parseInt(oldRoomNo) + parseInt(roomNo);
+                var oldCost = $('.total_cost').val();
+                var final_cost = parseInt(oldCost) + totalRoomCost;
+                //alert(totalCost);
+                $('.room_no').val(numberOfRooms);
+                $('.total_cost').val(final_cost);
+            });
+        })
         const dropZone = document.querySelector('#drop-zone');
         const inputElement = document.getElementById('upload-img');
         const img = document.querySelector('#dropzone-img');
@@ -239,12 +377,12 @@
         dropZone.addEventListener('change', (e) => {
             console.log(event)
             var fileName = URL.createObjectURL(event.target.files[0]);
-
+            console.log(fileName)
             var previewImg = document.getElementById("dropzone-img");
             previewImg.style.display = "block";
             previewImg.setAttribute("src", fileName);
 
-            p.style = 'display: none';
+            //p.style = 'display: none';
         });
         function dragNdrop(event) {
             console.log(event)
@@ -258,7 +396,7 @@
         }
 
         function inputClick() {
-           
+
             inputElement.click()
         }
 
@@ -279,8 +417,48 @@
                 img.src = src;
                 img.alt = file.name
             }
+            $("#upload-img").prop("files", e.dataTransfer.files)
         });
+        function DeleteImage() {
+            let warehouseSku = document.getElementById('WarehouseSKU').value;
+            let imagesource = document.querySelector("#dropzone-img").getAttribute('src')
+            if (!imagesource) {
+                return
+            }
 
-        
+            let isconfirm = confirm('Are you sure you want to delete this image?');
+
+            if (isconfirm) {
+                $.ajax({
+                    url: "Removeimage",
+                    method: 'GET',
+                    data: { warehouseSku: warehouseSku },
+                    success: function (response) {
+                        if (response.iserror == false) {
+                            document.getElementById("dropzone-img").style.display = 'none';
+                            toastr.success(response.message);
+                            //document.getElementById("delete").style.display = 'none';                  
+                            document.getElementById("p1").style.display = 'block';
+                            document.querySelector("#dropzone-img").src = "";
+
+
+                        }
+                        // console.log(response)
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+            
+            
+
+        }
+
+
+
     </script>
 }

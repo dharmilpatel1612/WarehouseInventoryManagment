@@ -18,7 +18,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         Dal obj_dal;
         DataTable dt;
         // GET: CatalogueProduct
-        public ActionResult CatalogueProduct(string SKU)       
+        public ActionResult CatalogueProduct(string SKU)
         {
             CatalogueProductModel Product = new CatalogueProductModel();
             if (SKU != null)
@@ -80,10 +80,9 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         Product.TotalCost = Convert.ToDecimal(dt.Rows[i]["TotalCost"].ToString());
                         // Get the value of ProductImage
                         Product.image = dt.Rows[i]["ProductImage"].ToString();
-                        ViewBag.imageurl =  Product.image;
+                        ViewBag.imageurl = Product.image;
                         TempData["Message"] = "Update Product";
                         ViewBag.Message1 = "Edit Catalogue Product";
-                       
                     }
                 }
                 return View(Product);
@@ -92,9 +91,9 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             TempData["Message"] = "SaveProduct";
             return View();
         }
-        
+
         [HttpPost]
-        public ActionResult CatalogueProduct(CatalogueProductModel catalogue,string SKU)
+        public ActionResult CatalogueProduct(CatalogueProductModel catalogue, string SKU)
         {
             try
             {
@@ -102,6 +101,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 // If statement condition used for image
                 if (catalogue.ProductImage != null)
                 {
+                    // Set file path with directory
                     var path = Server.MapPath("~/Uploads/");
                     if (!Directory.Exists(path))
                     {
@@ -112,7 +112,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     string filepath = Path.Combine(path, uploadedImageName);
                     catalogue.ProductImage.SaveAs(filepath);
                 }
-
                 //Update code
                 if (SKU != null)
                 {
@@ -132,7 +131,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     /* Variable declaration and convert into int
                        Get_SingleValue function call from Dal class to return single value*/
                     int Count = Convert.ToInt32(obj_dal.Get_SingleValue(sb.ToString()));
-                    // If Row count value is grater then 0 so Email id must be duplicate
+                    // If Row count value is grater then 0 so warehousesku must be duplicate
                     if (Count > 1)
                     {
                         // Error message
@@ -144,8 +143,9 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         sb.Clear();
                         sb.Append("SELECT ProductImage from tblCatalogueProduct where WarehouseSKU='" + SKU + "'");
                         string existingImageName = obj_dal.Get_SingleValue(sb.ToString());
-                        if (existingImageName != uploadedImageName)
+                        if (existingImageName != uploadedImageName && uploadedImageName != "")
                         {
+                            // Set file path with directory
                             string path = Server.MapPath("/Uploads/" + existingImageName);
                             FileInfo file = new FileInfo(path);
                             if (file.Exists)//check file exsit or not  
@@ -153,7 +153,6 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                                 file.Delete();
                             }
                         }
-
                         sb.Clear();
                         sb.Append("UPDATE tblCatalogueProduct SET ProductName='" + catalogue.ProductName + "',WarehouseSKU='" + catalogue.WarehouseSKU + "',");
                         sb.Append("Description='" + catalogue.Description + "',HSCode='" + catalogue.HSCode + "',Width='" + catalogue.Width + "',");
@@ -168,16 +167,20 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                             //image update
                             sb.Append("ProductImage='" + uploadedImageName + "',");
                         }
+                        else
+                        {
+                            existingImageName = obj_dal.Get_SingleValue("SELECT ProductImage from tblCatalogueProduct where WarehouseSKU='" + SKU + "'");
+                            uploadedImageName = existingImageName;
+                        }
                         sb.Append("TotalCost='" + catalogue.TotalCost + "' ");
                         sb.Append("FROM tblCatalogueProduct WHERE WarehouseSKU='" + SKU + "'");
                         obj_dal.EXECUTE_DML(sb.ToString());
                         //image display
-                        ViewBag.imageurl = uploadedImageName ?? existingImageName;
+                        ViewBag.imageurl = uploadedImageName;
                         ViewBag.Message = "Data updated successfully!";
                         TempData["Message"] = "Update Product";
                         ViewBag.Message1 = "Update Catalogue Product";
                     }
-
                 }
                 //insert code
                 else
@@ -210,13 +213,13 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         // If statement condition used for image and insert data  
                         if (catalogue.ProductImage != null)
                         {
+                            // Set file path with directory
                             var path = Server.MapPath("~/Uploads/");
                             if (!Directory.Exists(path))
                             {
                                 Directory.CreateDirectory(path);
                             }
                             uploadedImageName = Guid.NewGuid().ToString() + Path.GetExtension(catalogue.ProductImage.FileName);
-
                             string filepath = Path.Combine(path, uploadedImageName);
                             catalogue.ProductImage.SaveAs(filepath);
                             //DataTable dt;
@@ -237,12 +240,10 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                             ViewBag.Message = " Data inserted Successfully";
                             TempData["Message"] = "SaveProduct";
                             ViewBag.Message1 = "Add Catalogue Product";
-
                         }
                         // else statement condition used for insert data 
                         else
                         {
-
                             sb.Clear();
                             // Used to applied INSERT Query to get data from model to database
                             sb.Append("INSERT INTO tblCatalogueProduct ");
@@ -262,17 +263,46 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 //Error message
                 ViewBag.ErrorMessage = ex.Message;
-
             }
             return View();
-
         }
-
+        //Remove image section
+        public JsonResult RemoveImage(string warehousesku)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                obj_dal = new Dal();
+                //string existingImageName = string.Empty;
+                // Used to Applied SELECT Query to ProductImage data from database 
+                sb.Append("SELECT ProductImage from tblCatalogueProduct where WarehouseSKU='" + warehousesku + "'");
+                string existingImageName = obj_dal.Get_SingleValue(sb.ToString());
+                if (!string.IsNullOrEmpty(existingImageName))
+                {
+                    // Set file path with directory
+                    string path = Server.MapPath("/Uploads/" + existingImageName);
+                    FileInfo file = new FileInfo(path);
+                    if (file.Exists)//check file exsit or not  
+                    {
+                        file.Delete();
+                    }
+                    sb.Clear();
+                    // Used to Applied UPDATE Query to ProductImage 
+                    sb.Append("UPDATE tblCatalogueProduct SET ProductImage=''");
+                    sb.Append("FROM tblCatalogueProduct WHERE WarehouseSKU='" + warehousesku + "'");
+                    obj_dal.EXECUTE_DML(sb.ToString());
+                }
+                return Json(new { iserror = false, result = 1, message = "File successfully deleted" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { iserror = true, result = 1, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

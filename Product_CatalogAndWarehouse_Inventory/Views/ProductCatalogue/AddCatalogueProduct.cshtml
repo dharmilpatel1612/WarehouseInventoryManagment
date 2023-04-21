@@ -220,9 +220,11 @@
                         <div class="form-group" style="margin-left:20px" id="deleteimage">
                             @if (@ViewBag.ImageUrl != null & ViewBag.ImageUrl != "")
                             {
-                                <a onclick="DeleteImage();" id="Hidedeleteimage">
-                                    <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
-                                </a>                              
+                                @*<div id="toast-container" class="toast-top-full-width" aria-live="polite" role="alert">*@
+                                    <a onclick="DeleteImage();" id="Hidedeleteimage">
+                                        <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
+                                    </a>
+                                @*</div>*@
                             }
                             else
                             {
@@ -231,8 +233,8 @@
                         </div>
                         <div class="form-group" style="margin-left:20px">
                             <button class="btn btn-white" type="button">Cancel</button>
-                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">@TempData["Message"]</button>
-                        </div>
+                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">@TempData["Message"]</button>                        
+                        </div>                       
                     </div>
                 </div>
             </div>
@@ -369,22 +371,28 @@
             if (!imageSource) {
                 return;
             }
+            swal({
+                title: "Are you sure you want to delete this image?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
 
-            let isConfirm = confirm('Are you sure you want to delete this image?')
-            if (isConfirm) {               
+            }, function () {               
                 $.ajax({
                     url: "RemoveImage",
                     method: 'GET',
                     data: { warehousesku: warehouseSku },
                     success: function (response) {
                         if (response.iserror == false) {
-                            document.getElementById("dropzoneimg").style.display = 'none';                           
+                            document.getElementById("dropzoneimg").style.display = 'none';
                             p.textContent = "Drop image or click to upload";
                             document.getElementById("Hidedeleteimage").style.cursor = "not-allowed";
-                            document.querySelector('#dropzoneimg').src = '';                                                     
-                        }
-                        alert(response.message);                        
-                        document.getElementById('successMsg').innerText = response.message                       
+                            document.querySelector('#dropzoneimg').src = '';
+                        }                                             
+                        swal("Deleted!", response.message);
+                        document.getElementById('successMsg').innerText = response.message
                     },
                     failure: function (response) {
                         alert(response.responseText);
@@ -393,14 +401,14 @@
                         alert(response.responseText);
                     }
                 });
-            }          
+            });            
         }
 
         $(document).ready(function () {
             // alert box timeout for 3 sec
             setTimeout(function () {
                 $('.alert').fadeOut('slow');
-            }, 30000); // <-- time in milliseconds, 1000 =  1 sec
+            }, 4000); // <-- time in milliseconds, 1000 =  1 sec
         });
 
     </script>

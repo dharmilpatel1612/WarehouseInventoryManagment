@@ -1692,6 +1692,7 @@
     <Content Include="Views\SKUMapping\SKUMapping.cshtml" />
     <Content Include="Views\SKUMapping\GetMappingSku.cshtml" />
     <Content Include="Views\ProductCatalogue\AddCatalogueProduct.cshtml" />
+    <Content Include="Views\ProductCatalogue\ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

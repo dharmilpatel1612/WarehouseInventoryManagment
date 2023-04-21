@@ -31,7 +31,8 @@ namespace Product_CatalogAndWarehouse_Inventory
                     "~/Admin_Template/css/plugins/dataTables/datatables.min.css",
                     "~/Admin_Template/css/animate.css",                   
                     "~/Admin_Template/css/plugins/jasny/jasny-bootstrap.min.css",                   
-                    "~/Admin_Template/css/style.css"
+                    "~/Admin_Template/css/style.css",                    
+                    "~/Admin_Template/css/plugins/sweetalert/sweetalert.css"
                    /* "~/Admin_Template/css/ImageStyle.css"*/));
 
             // Mainly scripts Custom and plugin javascript
@@ -45,7 +46,8 @@ namespace Product_CatalogAndWarehouse_Inventory
                     "~/Admin_Template/js/plugins/dataTables/datatables.min.js",
                     "~/Admin_Template/js/inspinia.js",
                     "~/Admin_Template/js/plugins/pace/pace.min.js",
-                    "~/Admin_Template/js/plugins/jasny/jasny-bootstrap.min.js"));
+                    "~/Admin_Template/js/plugins/jasny/jasny-bootstrap.min.js",                   
+                    "~/Admin_Template/js/plugins/sweetalert/sweetalert.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
             "~/Admin_Template/js/plugins/validate/jquery.validate.min.js",

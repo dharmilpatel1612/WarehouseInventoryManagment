@@ -2,6 +2,7 @@
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Product_CatalogAndWarehouse_Inventory.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -226,7 +227,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     // Applied Select query for get value of ProductImage
                     sb.Append("SELECT ProductImage FROM tbl_ProductCatalogue where WarehouseSKU = '" + warehousesku + "'");
                     string imageName = obj_dal.Get_SingleValue(sb.ToString());
-                    // If statement use for delete old image file when update image.                        
+                    // If statement use for delete old image file.                       
                     if (!string.IsNullOrEmpty(imageName))
                     {
                         // Set file path with directory
@@ -242,15 +243,20 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     // Applied UPDATE Query to update Add catelogue product page Image field in database using model
                     sb.Append("UPDATE tbl_ProductCatalogue SET ProductImage = '"+uniqueimage+ "' WHERE WarehouseSKU = '" + warehousesku + "' ");
                     obj_dal.EXECUTE_DML(sb.ToString());                   
-                    return Json(new { iserror = false, result = 1, message = "File successfully deleted" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { iserror = false, result = 1, message = "Image successfully deleted" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { iserror = true, result = 1, message = "Warehousesku is null" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { iserror = true, result = 1,message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }
+            }            
+        }
+
+        public ActionResult ProductList()
+        {
             
+            return View();
         }
     }
 }

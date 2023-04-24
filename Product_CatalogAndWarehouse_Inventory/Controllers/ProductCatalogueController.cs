@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.WebPages;
 using System.Windows.Forms;
 
 namespace Product_CatalogAndWarehouse_Inventory.Controllers
@@ -253,10 +254,100 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             }            
         }
 
-        public ActionResult ProductList()
+        public ActionResult ProductList(ProductCatalogueModel productCatalogue,int? inputPageNo)
         {
+            obj_dal = new Dal();
+            sb = new StringBuilder();
+            DataTable dt_ProductList = new DataTable();
+            // Variable declaration of pageNumber,pageSize,offset with assigned its values
+            int pageNumber = 1;
+            int pageSize = 3;
+            int offSet = 0;
+            int maxPages = 5;
+
+            // Select query applied for get count of records count of tbl_ProductCatalogue
+            sb.Append("SELECT count(*) From tbl_ProductCatalogue");
+            double Record_count = Convert.ToInt32(obj_dal.Get_SingleValue(sb.ToString()));
+            // Calculate Total page using formula of Record_count divide by pagesize
+            var Total_page = (int)Math.Ceiling((decimal)Record_count / (decimal)pageSize);
+            productCatalogue.Page_Count = Total_page;
+            productCatalogue.StartPage = 1;
+            productCatalogue.EndPage = 5;
+          
+            /*If inputPageNo is not null than count offset using pageNumber minus 1 and than multiply this value with pagesize*/
+            if (inputPageNo != null)
+            {
+                // ensure current page isn't out of range
+                if (inputPageNo < 1)
+                {
+                    inputPageNo = 1;
+                }
+                else if (inputPageNo > Total_page)
+                {
+                    inputPageNo = Total_page;
+                }
+                int startPage, endPage;
+                if (Total_page <= maxPages)
+                {
+                    // total pages less than max so show all pages
+                    startPage = 1;
+                    endPage = Total_page;
+                }
+                else
+                {
+                    // total pages more than max so calculate start and end pages
+                    var maxPagesBeforeCurrentPage = (int)Math.Floor((decimal)maxPages / (decimal)2);
+                    var maxPagesAfterCurrentPage = (int)Math.Ceiling((decimal)maxPages / (decimal)2) - 1;
+                    if (inputPageNo <= maxPagesBeforeCurrentPage)
+                    {
+                        // current page near the start
+                        startPage = 1;
+                        endPage = maxPages;
+                    }
+                    else if (inputPageNo + maxPagesAfterCurrentPage >= Total_page)
+                    {
+                        // current page near the end
+                        startPage = Total_page - maxPages + 1;
+                        endPage = Total_page;
+                    }
+                    else
+                    {
+                        // current page somewhere in the middle
+                        startPage = inputPageNo.Value - maxPagesBeforeCurrentPage;
+                        endPage = inputPageNo.Value + maxPagesAfterCurrentPage;
+                    }
+                }
+                productCatalogue.StartPage = startPage;
+                productCatalogue.EndPage = endPage;
+                pageNumber = inputPageNo.Value;
+                offSet = pageSize * (pageNumber - 1);
+            }
+            productCatalogue.Page_Number = pageNumber;
             
-            return View();
+            sb.Clear();
+            // Use SELECT query to get value of specific field from table and for pagination
+            sb.Append("SELECT ProductName,TotalCost,ProductImage FROM tbl_ProductCatalogue ");
+            sb.Append($"ORDER BY ProductName OFFSET {offSet} ROWS FETCH NEXT {pageSize} ROWS ONLY");
+            dt_ProductList = obj_dal.GET_DATATABLE(sb.ToString());
+            List<ProductCatalogueModel> ProductGridCatelogue = new List<ProductCatalogueModel>();
+            // Use to check row count is grater than zero
+            if (dt_ProductList.Rows.Count > 0)
+            {
+                // code to be executed repeatedly until row count less than 0 
+                for (int i = 0; i < dt_ProductList.Rows.Count; i++)
+                {
+                    // Get the value of ProductName, TotalCost and FileImage
+                    ProductCatalogueModel catalogueModel = new ProductCatalogueModel();
+                    catalogueModel.ProductName = dt_ProductList.Rows[i]["ProductName"].ToString();
+                    catalogueModel.TotalCost = Convert.ToDecimal(dt_ProductList.Rows[i]["TotalCost"].ToString());
+                    catalogueModel.FileImage = dt_ProductList.Rows[i]["ProductImage"].ToString();
+                    // Add all field value in ProductGridCatelogue list
+                    ProductGridCatelogue.Add(catalogueModel);
+                }
+            }
+            // Pass ProductGridCatelogue list data to model
+            productCatalogue.ProductList = ProductGridCatelogue;
+            return View(productCatalogue);
         }
     }
 }

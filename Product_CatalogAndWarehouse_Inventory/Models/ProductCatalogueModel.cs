@@ -57,5 +57,10 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         [ImageExtensionsValidation]
         public HttpPostedFileBase ImageFile { get; set; }
         public string FileImage { get;set; }
+        public double? Page_Count { get; set; }
+        public int StartPage { get; set; }
+        public int EndPage { get; set; }
+        public int Page_Number { get; set; }
+        public List<ProductCatalogueModel> ProductList { get; set; }
     }
 }

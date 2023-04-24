@@ -220,11 +220,9 @@
                         <div class="form-group" style="margin-left:20px" id="deleteimage">
                             @if (@ViewBag.ImageUrl != null & ViewBag.ImageUrl != "")
                             {
-                                @*<div id="toast-container" class="toast-top-full-width" aria-live="polite" role="alert">*@
-                                    <a onclick="DeleteImage();" id="Hidedeleteimage">
-                                        <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
-                                    </a>
-                                @*</div>*@
+                                <a onclick="DeleteImage();" id="Hidedeleteimage">
+                                    <i class="fa fa-trash" style="color: red;">Delete Attachment</i>
+                                </a>
                             }
                             else
                             {
@@ -233,8 +231,8 @@
                         </div>
                         <div class="form-group" style="margin-left:20px">
                             <button class="btn btn-white" type="button">Cancel</button>
-                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">@TempData["Message"]</button>                        
-                        </div>                       
+                            <button class="btn btn-w-m btn-primary" type="submit" id="uploadedimage">@TempData["Message"]</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -379,7 +377,7 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
 
-            }, function () {               
+            }, function () {
                 $.ajax({
                     url: "RemoveImage",
                     method: 'GET',
@@ -390,7 +388,7 @@
                             p.textContent = "Drop image or click to upload";
                             document.getElementById("Hidedeleteimage").style.cursor = "not-allowed";
                             document.querySelector('#dropzoneimg').src = '';
-                        }                                             
+                        }
                         swal("Deleted!", response.message);
                         document.getElementById('successMsg').innerText = response.message
                     },
@@ -401,7 +399,7 @@
                         alert(response.responseText);
                     }
                 });
-            });            
+            });
         }
 
         $(document).ready(function () {

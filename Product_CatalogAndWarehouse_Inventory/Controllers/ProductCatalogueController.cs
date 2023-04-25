@@ -1,15 +1,18 @@
 ﻿using Microsoft.Ajax.Utilities;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using Product_CatalogAndWarehouse_Inventory.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Printing;
 using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.WebPages;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Product_CatalogAndWarehouse_Inventory.Controllers
 {
@@ -20,13 +23,13 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
         DataTable dt_product = new DataTable();
 
         // GET: Edit Product Catalogue
-        public ActionResult AddCatalogueProduct(string sku, string ImagePath)              
-        {          
+        public ActionResult AddCatalogueProduct(string sku, string ImagePath)
+        {
             ProductCatalogueModel productmodel = new ProductCatalogueModel();
             /* If statement is used to check sku is null or not 
                if it is not null than fill AddCatalogueProduct page fieldwith corresponding WarehouseSKU*/
             if (sku != null)
-            {      
+            {
                 obj_dal = new Dal();
                 sb = new StringBuilder();
                 // Applied SELECT Query to get data of tbl_ProductCatalogue from database with the use of warehousesku
@@ -42,14 +45,14 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     for (int i = 0; i < dt_product.Rows.Count; i++)
                     {
                         // Get the value of all Add Catelogue Product page fields
-                        productmodel.ProductName = dt_product.Rows[i]["ProductName"].ToString();                       
-                        productmodel.WarehouseSKU = dt_product.Rows[i]["WarehouseSKU"].ToString();                      
-                        productmodel.Description = dt_product.Rows[i]["Description"].ToString();                      
-                        productmodel.HSCode = dt_product.Rows[i]["HSCode"].ToString();                      
+                        productmodel.ProductName = dt_product.Rows[i]["ProductName"].ToString();
+                        productmodel.WarehouseSKU = dt_product.Rows[i]["WarehouseSKU"].ToString();
+                        productmodel.Description = dt_product.Rows[i]["Description"].ToString();
+                        productmodel.HSCode = dt_product.Rows[i]["HSCode"].ToString();
                         productmodel.Width = Convert.ToDecimal(dt_product.Rows[i]["Width"].ToString());
                         productmodel.Length = Convert.ToDecimal(dt_product.Rows[i]["Length"].ToString());
-                        productmodel.Height = Convert.ToDecimal(dt_product.Rows[i]["Height"].ToString());                       
-                        productmodel.MaterialComposition = dt_product.Rows[i]["MaterialComposition"].ToString();                      
+                        productmodel.Height = Convert.ToDecimal(dt_product.Rows[i]["Height"].ToString());
+                        productmodel.MaterialComposition = dt_product.Rows[i]["MaterialComposition"].ToString();
                         productmodel.VarsanyBag = dt_product.Rows[i]["VarsanyBag"].ToString();
                         productmodel.Colour = dt_product.Rows[i]["Colour"].ToString();
                         productmodel.ProductWeight = Convert.ToDecimal(dt_product.Rows[i]["ProductWeight"].ToString());
@@ -57,7 +60,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         productmodel.BoxQuantity = Convert.ToInt32(dt_product.Rows[i]["BoxQuantity"].ToString());
                         productmodel.Manufaturer = dt_product.Rows[i]["Manufature"].ToString();
                         productmodel.MailingBag = dt_product.Rows[i]["MailingBag"].ToString();
-                        productmodel.Size = dt_product.Rows[i]["Size"].ToString();                       
+                        productmodel.Size = dt_product.Rows[i]["Size"].ToString();
                         productmodel.ProductCost = Convert.ToDecimal(dt_product.Rows[i]["ProductCost"].ToString());
                         productmodel.Commision = Convert.ToDecimal(dt_product.Rows[i]["Commision"].ToString());
                         productmodel.ShippingCost = Convert.ToDecimal(dt_product.Rows[i]["ShippingCost"].ToString());
@@ -73,12 +76,12 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             ViewBag.Title = "Add Catalogue Product";
             TempData["Message"] = "Save Product";
             return View();
-            
+
         }
 
         // POST : ADD / Edit Product Catalogue 
         [HttpPost]
-        public ActionResult AddCatalogueProduct(ProductCatalogueModel product,string sku,string ImagePath)
+        public ActionResult AddCatalogueProduct(ProductCatalogueModel product, string sku, string ImagePath)
         {
             try
             {
@@ -126,7 +129,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                 if (sku != null)
                 {
                     // Applied Select query for duplicate value of WarehouseSKU
-                    sb.Append("SELECT COUNT(WarehouseSKU) FROM tbl_ProductCatalogue WHERE WarehouseSKU = '" + product.WarehouseSKU + "' AND WarehouseSKU!='"+sku+"'");
+                    sb.Append("SELECT COUNT(WarehouseSKU) FROM tbl_ProductCatalogue WHERE WarehouseSKU = '" + product.WarehouseSKU + "' AND WarehouseSKU!='" + sku + "'");
                     int Count = Convert.ToInt32(obj_dal.Get_SingleValue(sb.ToString()));
                     // If Row count value is grater then 0 so Email id must be duplicate
                     if (Count > 0)
@@ -135,7 +138,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                         ViewBag.ErrorMessage = "Warehouse Already exist";
                     }
                     else
-                    {                       
+                    {
                         sb.Clear();
                         // Applied Select query for get value of ProductImage
                         sb.Append("SELECT ProductImage FROM tbl_ProductCatalogue where WarehouseSKU = '" + sku + "'");
@@ -153,26 +156,26 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                             {
                                 file.Delete();
                             }
-                        }                      
+                        }
                         else
                         {
                             uniqueImagename = Image;
                         }
                         sb.Clear();
                         // Applied UPDATE Query to update Add catelogue product page field in database using model
-                        sb.Append("UPDATE tbl_ProductCatalogue SET ProductName = '"+product.ProductName+ "',WarehouseSKU = '"+product.WarehouseSKU+"',");
-                        sb.Append("Description='" + product.Description+ "',HSCode='"+product.HSCode+ "',Width='" + product.Width+ "',");
-                        sb.Append("Length='"+product.Length+ "',Height='"+product.Height+"', MaterialComposition='"+product.MaterialComposition+"',");
-                        sb.Append("VarsanyBag='"+product.VarsanyBag+ "',Colour='"+product.Colour+ "',ProductWeight='"+product.ProductWeight+"',");
-                        sb.Append("BoxSize='"+product.BoxSize+ "',BoxQuantity='"+product.BoxQuantity+ "',Manufature='"+product.Manufaturer+"',");
-                        sb.Append("MailingBag='" + product.MailingBag+"',Size='" + product.Size+ "',ProductCost='"+product.ProductCost+ "',");
-                        sb.Append("Commision='"+product.Commision+"',ShippingCost='" + product.ShippingCost+ "',Duty='"+product.Duty+ "',");
-                        sb.Append("TotalCost='"+product.TotalCost+"',ProductImage='" + uniqueImagename + "' WHERE WarehouseSKU = '" + sku + "'");
+                        sb.Append("UPDATE tbl_ProductCatalogue SET ProductName = '" + product.ProductName + "',WarehouseSKU = '" + product.WarehouseSKU + "',");
+                        sb.Append("Description='" + product.Description + "',HSCode='" + product.HSCode + "',Width='" + product.Width + "',");
+                        sb.Append("Length='" + product.Length + "',Height='" + product.Height + "', MaterialComposition='" + product.MaterialComposition + "',");
+                        sb.Append("VarsanyBag='" + product.VarsanyBag + "',Colour='" + product.Colour + "',ProductWeight='" + product.ProductWeight + "',");
+                        sb.Append("BoxSize='" + product.BoxSize + "',BoxQuantity='" + product.BoxQuantity + "',Manufature='" + product.Manufaturer + "',");
+                        sb.Append("MailingBag='" + product.MailingBag + "',Size='" + product.Size + "',ProductCost='" + product.ProductCost + "',");
+                        sb.Append("Commision='" + product.Commision + "',ShippingCost='" + product.ShippingCost + "',Duty='" + product.Duty + "',");
+                        sb.Append("TotalCost='" + product.TotalCost + "',ProductImage='" + uniqueImagename + "' WHERE WarehouseSKU = '" + sku + "'");
                         obj_dal.EXECUTE_DML(sb.ToString());
                         ViewBag.ImageUrl = uniqueImagename;
                         ViewBag.ProductName = product.ProductName;
                         // Success message in red color
-                        ViewBag.Message = "Data updated successfully!";                 
+                        ViewBag.Message = "Data updated successfully!";
                     }
                     TempData["Message"] = "Update Product";
                 }
@@ -210,8 +213,8 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             }
             catch (Exception ex)
             {
-                    ViewBag.ErrorMessage = ex.Message;
-            }            
+                ViewBag.ErrorMessage = ex.Message;
+            }
             return View();
         }
 
@@ -222,7 +225,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
             {
                 StringBuilder sb = new StringBuilder();
                 obj_dal = new Dal();
-                string uniqueimage = string.Empty; 
+                string uniqueimage = string.Empty;
                 if (warehousesku != null)
                 {
                     // Applied Select query for get value of ProductImage
@@ -242,54 +245,66 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     }
                     sb.Clear();
                     // Applied UPDATE Query to update Add catelogue product page Image field in database using model
-                    sb.Append("UPDATE tbl_ProductCatalogue SET ProductImage = '"+uniqueimage+ "' WHERE WarehouseSKU = '" + warehousesku + "' ");
-                    obj_dal.EXECUTE_DML(sb.ToString());                   
+                    sb.Append("UPDATE tbl_ProductCatalogue SET ProductImage = '" + uniqueimage + "' WHERE WarehouseSKU = '" + warehousesku + "' ");
+                    obj_dal.EXECUTE_DML(sb.ToString());
                     return Json(new { iserror = false, result = 1, message = "Image successfully deleted" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { iserror = true, result = 1, message = "Warehousesku is null" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { iserror = true, result = 1,message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }            
+                return Json(new { iserror = true, result = 1, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        public ActionResult ProductList(ProductCatalogueModel productCatalogue,int? inputPageNo)
+        public ActionResult ProductList(ProductCatalogueModel productCatalogue, int? Page, int? pageSize=2)
         {
             obj_dal = new Dal();
             sb = new StringBuilder();
             DataTable dt_ProductList = new DataTable();
-            // Variable declaration of pageNumber,pageSize,offset with assigned its values
-            int pageNumber = 1;
-            int pageSize = 3;
+            // Variable declaration of pageNumber,offset,maxPages,pageSize with assigned its values
+            int pageNumber = 1;            
             int offSet = 0;
             int maxPages = 5;
+            int pagesize = pageSize ?? 2;
 
+            // List of PageSize for products
+            productCatalogue.PageSizeList = new List<SelectListItem> 
+            {
+                new SelectListItem { Value="2", Text="2" },
+                new SelectListItem { Value ="4", Text="4" },
+                new SelectListItem { Value ="6", Text="6" },
+                new SelectListItem { Value ="8", Text="8" },
+                new SelectListItem { Value ="12", Text="12" }
+            };
+            
             // Select query applied for get count of records count of tbl_ProductCatalogue
             sb.Append("SELECT count(*) From tbl_ProductCatalogue");
             double Record_count = Convert.ToInt32(obj_dal.Get_SingleValue(sb.ToString()));
-            // Calculate Total page using formula of Record_count divide by pagesize
-            var Total_page = (int)Math.Ceiling((decimal)Record_count / (decimal)pageSize);
+            /* Calculate Total page using formula of Record_count divide by pagesize
+             * using Math.Ceiling() for convert decimal value to nearest whole number */
+            var Total_page = (int)Math.Ceiling((decimal)Record_count / (decimal)pagesize);
             productCatalogue.Page_Count = Total_page;
             productCatalogue.StartPage = 1;
             productCatalogue.EndPage = 5;
-          
-            /*If inputPageNo is not null than count offset using pageNumber minus 1 and than multiply this value with pagesize*/
-            if (inputPageNo != null)
+
+            /*If Page is not null than count page according maxPages*/
+            if (Page != null)
             {
                 // ensure current page isn't out of range
-                if (inputPageNo < 1)
+                if (Page < 1)
                 {
-                    inputPageNo = 1;
+                    Page = 1;
                 }
-                else if (inputPageNo > Total_page)
+                // Page grater than Total_page so page is equal to Total_page
+                else if (Page > Total_page)
                 {
-                    inputPageNo = Total_page;
+                    Page = Total_page;
                 }
                 int startPage, endPage;
+                // total pages less than max so show all pages
                 if (Total_page <= maxPages)
-                {
-                    // total pages less than max so show all pages
+                {                  
                     startPage = 1;
                     endPage = Total_page;
                 }
@@ -298,13 +313,13 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     // total pages more than max so calculate start and end pages
                     var maxPagesBeforeCurrentPage = (int)Math.Floor((decimal)maxPages / (decimal)2);
                     var maxPagesAfterCurrentPage = (int)Math.Ceiling((decimal)maxPages / (decimal)2) - 1;
-                    if (inputPageNo <= maxPagesBeforeCurrentPage)
+                    if (Page <= maxPagesBeforeCurrentPage)
                     {
                         // current page near the start
                         startPage = 1;
                         endPage = maxPages;
                     }
-                    else if (inputPageNo + maxPagesAfterCurrentPage >= Total_page)
+                    else if (Page + maxPagesAfterCurrentPage >= Total_page)
                     {
                         // current page near the end
                         startPage = Total_page - maxPages + 1;
@@ -313,21 +328,24 @@ namespace Product_CatalogAndWarehouse_Inventory.Controllers
                     else
                     {
                         // current page somewhere in the middle
-                        startPage = inputPageNo.Value - maxPagesBeforeCurrentPage;
-                        endPage = inputPageNo.Value + maxPagesAfterCurrentPage;
+                        startPage = Page.Value - maxPagesBeforeCurrentPage;
+                        endPage = Page.Value + maxPagesAfterCurrentPage;
                     }
                 }
+                // Store startPage,endPage to model and pass page value to pageNumber
                 productCatalogue.StartPage = startPage;
                 productCatalogue.EndPage = endPage;
-                pageNumber = inputPageNo.Value;
-                offSet = pageSize * (pageNumber - 1);
+                pageNumber = Page.Value;
             }
+            //count offset using pageNumber minus 1 and than multiply this value with pagesize
+            offSet = pagesize * (pageNumber - 1);
+            // Store pageNumber to model
             productCatalogue.Page_Number = pageNumber;
-            
+
             sb.Clear();
             // Use SELECT query to get value of specific field from table and for pagination
             sb.Append("SELECT ProductName,TotalCost,ProductImage FROM tbl_ProductCatalogue ");
-            sb.Append($"ORDER BY ProductName OFFSET {offSet} ROWS FETCH NEXT {pageSize} ROWS ONLY");
+            sb.Append($"ORDER BY ProductName OFFSET {offSet} ROWS FETCH NEXT {pagesize} ROWS ONLY");
             dt_ProductList = obj_dal.GET_DATATABLE(sb.ToString());
             List<ProductCatalogueModel> ProductGridCatelogue = new List<ProductCatalogueModel>();
             // Use to check row count is grater than zero

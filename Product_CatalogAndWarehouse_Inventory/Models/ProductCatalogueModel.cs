@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Product_CatalogAndWarehouse_Inventory.Models
 {
@@ -62,5 +64,7 @@ namespace Product_CatalogAndWarehouse_Inventory.Models
         public int EndPage { get; set; }
         public int Page_Number { get; set; }
         public List<ProductCatalogueModel> ProductList { get; set; }
-    }
+        public int? PageSize { get; set; }       
+        public List<SelectListItem> PageSizeList { get; set; } = new List<SelectListItem>();
+    }  
 }

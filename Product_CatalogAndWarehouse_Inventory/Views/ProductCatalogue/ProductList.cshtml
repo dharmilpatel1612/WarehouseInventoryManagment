@@ -5,77 +5,85 @@
 }
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        @foreach (var item in Model.ProductList)
-        {
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-content product-box" style="height:280px">
-                        <div class="product-imitation" id="dropzone">
-                            @if (!string.IsNullOrEmpty(item.FileImage))
-                            {
-                                <img src="/UploadedImage/@item.FileImage" id="dropzoneimg" alt="">
-                            }
-                            else
-                            {
-                                <img src="/DefaultImage/thumbnail-default.jpg" alt="" id="dropzoneimg" />
-                            }
-                        </div>
-                        <div class="product-desc" style="height:50px">
-                            <span class="product-price">
-                                £@item.TotalCost
-                            </span>
-                            <div class="small m-t-xs" style="text-align:center">
-                                @item.ProductName
+    <form method="post" id="myForm" class="form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Show</label>
+                <div class="col-sm-1">
+                    @Html.DropDownList("PageSize", new SelectList(Model.PageSizeList, "Value", "Text",Model.PageSize),
+                        new { onchange = "PageSizeChangefunc(this.value)", @class = "form-control" })
+                </div>
+            </div>
+            @foreach (var item in Model.ProductList)
+            {
+                <div class="col-md-3">
+                    <div class="ibox">
+                        <div class="ibox-content product-box" style="height:280px">
+                            <div class="product-imitation" id="dropzone">
+                                @if (!string.IsNullOrEmpty(item.FileImage))
+                                {
+                                    <img src="/UploadedImage/@item.FileImage" id="dropzoneimg" alt="">
+                                }
+                                else
+                                {
+                                    <img src="/DefaultImage/thumbnail-default.jpg" alt="" id="dropzoneimg" />
+                                }
                             </div>
-                        </div>
-                        <div class="product-button">
-                            <div class="m-t text-righ">
-                                <a href="#" class="btn btn-xs btn-outline btn-primary" style="margin-left:40px">View <i class="fa fa-long-arrow-right"></i> </a>
-                                <a href="#" class="btn btn-xs btn-outline btn-primary" style="margin-left:20px">Edit <i class="fa fa-long-arrow-right"></i> </a>
-                                <a href="#" class="btn btn-xs  btn btn-danger" style="margin-left:20px">Delete <i class="fa fa-long-arrow-right"></i> </a>
+                            <div class="product-desc" style="height:50px">
+                                <span class="product-price">
+                                    £@item.TotalCost
+                                </span>
+                                <div class="small m-t-xs" style="text-align:center">
+                                    @item.ProductName
+                                </div>
+                            </div>
+                            <div class="product-button">
+                                <div class="m-t text-righ">
+                                    <a href="#" class="btn btn-xs btn-outline btn-primary" style="margin-left:40px">View <i class="fa fa-long-arrow-right"></i> </a>
+                                    <a href="#" class="btn btn-xs btn-outline btn-primary" style="margin-left:20px">Edit <i class="fa fa-long-arrow-right"></i> </a>
+                                    <a href="#" class="btn btn-xs  btn btn-danger" style="margin-left:20px">Delete <i class="fa fa-long-arrow-right"></i> </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
-    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-        <ul class="pagination">
-            @if (Model.Page_Number != 1)
-            {
-                <li>
-                    @Html.ActionLink("Prev", "ProductList", new { inputPageNo = Model.Page_Number - 1 })
-                    @Html.ActionLink("First", "ProductList", new { inputPageNo = 1 })
-                </li>
             }
-            @for (int i = Model.StartPage; i <= Model.EndPage; i++)
-            {
-                if (i == Model.Page_Number)
-                {
-                    <li class="active">
-                        @Html.ActionLink(i.ToString(), "ProductList", new { inputPageNo = Model.Page_Number })
-                    </li>
-                }
-                else
+        </div>
+
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <ul class="pagination">
+                @if (Model.Page_Number != 1)
                 {
                     <li>
-                        @Html.ActionLink(i.ToString(), "ProductList", new { inputPageNo = i })
+                        @Html.ActionLink("Prev", "ProductList", new { Page = Model.Page_Number - 1, pageSize = Model.PageSize })
+                        @Html.ActionLink("First", "ProductList", new { Page = 1, pageSize = Model.PageSize })
                     </li>
-                }               
-            }
-            @if (Model.Page_Number != Model.Page_Count)
-            {
-                <li>
-                    @Html.ActionLink("Next", "ProductList", new { inputPageNo = Model.Page_Number + 1 })
-                    @Html.ActionLink("Last", "ProductList", new { inputPageNo = Model.Page_Count })
-                </li>
-            }
-        </ul>
-    </div>
-
+                }
+                @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+                {
+                    if (i == Model.Page_Number)
+                    {
+                        <li class="active">
+                            @Html.ActionLink(i.ToString(), "ProductList", new { Page = Model.Page_Number, pageSize= Model.PageSize })
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink(i.ToString(), "ProductList", new { Page = i, pageSize = Model.PageSize })
+                        </li>
+                    }
+                }
+                @if (Model.Page_Number != Model.Page_Count)
+                {
+                    <li>
+                        @Html.ActionLink("Next", "ProductList", new { Page = Model.Page_Number + 1, pageSize = Model.PageSize })
+                        @Html.ActionLink("Last", "ProductList", new { Page = Model.Page_Count, pageSize = Model.PageSize })
+                    </li>
+                }
+            </ul>
+        </div>
+    </form>
 </div>
 
 <style>
@@ -95,6 +103,15 @@
         display: block;
     }
 </style>
+
+@section scripts{
+    <script>     
+        function PageSizeChangefunc(pageSize)
+        {           
+            window.location.href = "/ProductCatalogue/ProductList?pageSize=" + pageSize;         
+        }    
+    </script>
+}
 
 
 

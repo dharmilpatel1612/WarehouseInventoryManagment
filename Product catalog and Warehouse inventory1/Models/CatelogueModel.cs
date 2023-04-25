@@ -48,5 +48,9 @@ namespace Product_catalog_and_Warehouse_inventory1.Models
         public HttpPostedFileBase ProductImage { get; set; }
         public string FileImage { get; set; }
         public List<CatelogueModel> productList { get; set; }
+        public double? PagedList { get; set; }
+        public int startPage { get; set; }
+        public int endPage { get; set; }
+        public int pageNumber { get; set; }
     }
 }

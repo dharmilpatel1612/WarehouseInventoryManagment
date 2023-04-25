@@ -14,6 +14,7 @@ using SolrNet.Utils;
 using System.Configuration;
 using System.Web.Services.Description;
 using Microsoft.SqlServer.Server;
+using System.Web.WebPages;
 
 namespace Product_catalog_and_Warehouse_inventory1.Controllers
 {
@@ -268,6 +269,101 @@ namespace Product_catalog_and_Warehouse_inventory1.Controllers
             {
                 return Json(new { iserror = true, result = 1, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+        [HttpGet]
+        public ActionResult cateloguepage(int? inputPageNo)
+        {
+            CatelogueModel Catelogue = new CatelogueModel();
+            string imageurl = string.Empty;
+            objDal = new Dal();
+            sb = new StringBuilder();
+            //vaiable decleration of pagenumber,pagesize,offset with assigned its value
+            
+            int pageNumber = 1;
+            int pageSize = 3;
+            int offSet = 0;
+            int maxPages = 3;
+
+
+            //vaiable decleration of tempdata
+            //if tempdata is not null then retrive userlist to view
+            var tempdata = TempData["Model"];
+            if (tempdata != null)
+            {
+                return View(tempdata);
+            }
+            sb.Append("select count(*) from tblCatelogue ");
+            double count = Convert.ToInt32(objDal.Get_SingleValue(sb.ToString()));
+            /*count total page from total column divided by pagesize and using math.ceiling()for convert decimal value
+           to nearest whole number*/
+            double Totalpage = Math.Ceiling(count / pageSize);
+            //store totalpage to model pagecount
+            Catelogue.PagedList = Totalpage;
+            // if inputPageNo is grater or equalto then pass inputpageNo value to pagenumber
+            //pagenumber minus 1 into pagesize is offset
+            if (inputPageNo <= Totalpage)
+            {
+                pageNumber = inputPageNo.Value;
+                offSet = pageSize * (pageNumber - 1);
+                Catelogue.pageNumber = pageNumber;
+            }
+            int startPage, endPage;
+            if (Totalpage <= maxPages)
+            {
+                // total pages less than max so show all pages
+                Catelogue.startPage = 1;
+                Catelogue.endPage = (int)Totalpage;
+            }
+            else
+            {
+                // total pages more than max so calculate start and end pages
+                var maxPagesBeforeCurrentPage = (int)Math.Floor((decimal)maxPages / (decimal)2);
+                var maxPagesAfterCurrentPage = (int)Math.Ceiling((decimal)maxPages / (decimal)2) - 1;
+                if (pageNumber <= maxPagesBeforeCurrentPage)
+                {
+                    // current page near the start
+                    Catelogue.startPage = 1;
+                    Catelogue.endPage = maxPages;
+                }
+                else if (pageNumber + maxPagesAfterCurrentPage >= Totalpage)
+                {
+                    // current page near the end
+                    Catelogue.startPage = (int)(Totalpage - maxPages + 1);
+                    Catelogue.endPage = (int)Totalpage;
+                    
+                }
+                else
+                {
+                    // current page somewhere in the middle
+                    Catelogue.startPage = pageNumber - maxPagesBeforeCurrentPage;
+                    Catelogue.endPage = pageNumber + maxPagesAfterCurrentPage;
+                }
+            }
+            
+        
+            Catelogue.pageNumber = pageNumber;
+            sb=new StringBuilder();
+            sb.Append("select Product_Name,TotalCost,ProductImage from tblCatelogue ");
+            sb.Append($"ORDER BY Product_Name OFFSET {offSet} ROWS FETCH NEXT {pageSize} ROWS ONLY");
+            //call get_singlevalue()to get single value
+            dt =objDal.GetDataTable(sb.ToString());
+            List<CatelogueModel>catelogues= new List<CatelogueModel>();
+            if (dt.Rows.Count > 0)
+            {
+                //code to be executed repeatedly util row i less then 0
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    CatelogueModel catelogue =new CatelogueModel();
+                    catelogue.ProductName = dt.Rows[i]["Product_Name"].ToString();
+                    catelogue.TotalCost = Convert.ToDecimal(dt.Rows[i]["TotalCost"].ToString());
+                    catelogue.FileImage = catelogue.FileImage = dt.Rows[i]["ProductImage"].ToString();
+                    catelogues.Add(catelogue);
+                }
+
+            }
+
+            Catelogue.productList = catelogues;
+             return View(Catelogue); 
         }
 
 

@@ -285,6 +285,7 @@
     <Content Include="Admin_Templete\css\plugins\toastr\toastr.min.css" />
     <Content Include="Admin_Templete\css\plugins\touchspin\jquery.bootstrap-touchspin.min.css" />
     <Content Include="Admin_Templete\css\style.css" />
+    <Content Include="Admin_Templete\default_image.png" />
     <Content Include="Admin_Templete\email_templates\action.html" />
     <Content Include="Admin_Templete\email_templates\alert.html" />
     <Content Include="Admin_Templete\email_templates\billing.html" />
@@ -1711,6 +1712,7 @@
     <Content Include="Views\SKUMapping\SKUmapping.cshtml" />
     <Content Include="Views\Cateogue.cshtml" />
     <Content Include="Views\CatelogueProduct\catelogueproduct.cshtml" />
+    <Content Include="Views\CatelogueProduct\cateloguepage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

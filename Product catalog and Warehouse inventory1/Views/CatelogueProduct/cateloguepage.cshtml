@@ -1,0 +1,95 @@
+﻿@model Product_catalog_and_Warehouse_inventory1.Models.CatelogueModel
+
+@{ 
+    ViewBag.Title = "cateloguepage";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        @foreach (var item in Model.productList)
+        {
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content product-box">
+                        <div class="product-imitation" padding: 40px;>
+                            @if (!string.IsNullOrEmpty(item.FileImage))
+                            {
+                                <img src="~/upload image/@item.FileImage" id="dropzone-img" alt="" />
+                            }
+                            else if (string.IsNullOrEmpty(item.FileImage))
+                            {
+
+                                <img src="~/DefaultImage/default_image.png" alt="" id="dropzone-img" />
+                            }
+                        </div>
+                        <div class="product-desc">
+                            <span class="product-price">
+                                £
+                                @if (item.TotalCost != null)
+                                {
+                                    @item.TotalCost
+                                }
+                            </span>
+                            <a href="#" class="product-name" style="text-align:center"> @item.ProductName</a>
+                            <div class="m-t text-righ">
+                                <a href="#" class="btn btn-primary" style="width: 70px;margin-left:30px;" margin-right: 20px">Edit</a>
+                                <a href="#" class="btn btn-success" style="width: 70px;margin-left:30px">View</a>
+                                <a href="#" class="btn btn-danger" style="margin-left:30px">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <ul class="pagination pull-right">
+        
+
+        @if (Model.pageNumber > 1)
+        {
+            <li>
+                @Html.ActionLink("First", "cateloguepage" )
+
+            </li>
+            <li>
+                @Html.ActionLink("Previous", "cateloguepage", new { inputPageNo = Model.pageNumber - 1 })
+            </li>
+        }
+        @for (int i = Model.startPage; i <= Model.endPage; i++)
+        {
+            if (i == Model.pageNumber)
+            {
+                <li class="active">
+                    @Html.ActionLink(i.ToString(), "cateloguepage", new { inputPageNo = Model.pageNumber })
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink(i.ToString(), "cateloguepage", new { inputPageNo = i })
+
+                </li>
+            }
+        }
+
+        @if (Model.pageNumber != Model.PagedList)
+        {
+            <li>
+                @Html.ActionLink("Next", "cateloguepage", new { inputPageNo = Model.pageNumber + 1 })
+            </li>
+            <li>
+                @Html.ActionLink("Last", "cateloguepage", new { inputPageNo = Model.PagedList })
+
+            </li>
+        }
+
+    </ul>
+</div>
+<style>
+    #dropzone-img{
+        object-fit:contain;
+        width:100%;
+        height:250px;
+        padding:4px;
+    }
+</style>

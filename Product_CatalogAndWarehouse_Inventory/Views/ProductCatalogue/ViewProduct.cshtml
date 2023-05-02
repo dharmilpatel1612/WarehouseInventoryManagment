@@ -1,0 +1,177 @@
+﻿@model Product_CatalogAndWarehouse_Inventory.Models.ProductCatalogueModel
+
+<div class="row">
+    <div class="col-sm-12">
+        @Html.TextBox("SkuName", (String)ViewBag.Warehouse, new { @class = "form-control", @style = "font-weight:bold" })
+    </div>
+    @if (Model != null)
+    {
+        <div class="col-lg-6 b-r">
+            <div id="dropzone">
+                @if (!string.IsNullOrEmpty(Model.FileImage))
+                {
+                    <img src="/UploadedImage/@Model.FileImage" id="dropzoneimg" alt="">
+                }
+                else
+                {
+                    <img src="/DefaultImage/thumbnail-default.jpg" alt="" id="dropzoneimg" />
+                }
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Product Name</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">WarehouseSKU</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.WarehouseSKU, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Description</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">HSCode</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group" style="text-align:center">
+                <label>Product Dimensions:</label>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Width</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Width, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Length</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Length, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Material Composition</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.MaterialComposition, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Varsany Bag</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.VarsanyBag, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Colour</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Colour, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Product Weight</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ProductWeight, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Box Size</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.BoxSize, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Box Quantity</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.BoxQuantity, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Manufacture</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Manufaturer, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Mailing Bag</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.MailingBag, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Size</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Size, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group" style="text-align:center">
+                <label>Cost</label>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Product Cost</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ProductCost, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Commision</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Commision, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Shipping Cost</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ShippingCost, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Duty</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Duty, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group" style="text-align:center">
+                <label>Total Cost</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Chinese Yuan</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ChineseYuan, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">US Dollar</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.UsDollar, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Euros</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Euros, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Total Cost</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.TotalCost, new { @class = "form-control", @style = "border:none" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
